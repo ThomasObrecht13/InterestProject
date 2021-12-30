@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeFragment"
+    android:background="@color/whiteApp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/logo"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:src="@drawable/logo_interest_bleu"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/homeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+
+        android:textAlignment="center"
+        android:text="En ligne"
+        android:textSize="30dp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listEmptyFriend"
+
+        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
+        android:layout_marginTop="10dp"
+
+        android:textAlignment="center"
+        android:textSize="16dp"
+        android:text="Aucun(e)s ami(e)s en ligne"
+
+        />
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recoTitle"
+
+        android:background="@drawable/separator_bar"
+
+        app:layout_constraintTop_toBottomOf="@+id/listEmptyFriend"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+
+        android:textAlignment="center"
+        android:text="Recommandation"
+        android:textSize="30dp"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
