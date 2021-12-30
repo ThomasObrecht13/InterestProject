@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">=
+    <item android:title="Accueil"
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/house_logo"/>
+    <item android:title="Message"
+        android:id="@+id/messageFragment"
+        android:icon="@drawable/message_logo"/>
+    <item android:title="recherche"
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/search_logo"/>
+    <item android:title="Profile"
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/profile_logo"/>
+</menu>
