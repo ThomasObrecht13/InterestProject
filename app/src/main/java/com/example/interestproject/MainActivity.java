@@ -1,10 +1,10 @@
 package com.example.interestproject;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -26,45 +26,45 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.nav_fragment, homeFragment)
+                .replace(R.id.nav_fragment, profileFragment)
                 .commit();
     }
 
     private NavigationBarView.OnItemSelectedListener navListener = new
-            NavigationBarView.OnItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.homeFragment:
-                            getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .setReorderingAllowed(true)
-                                    .replace(R.id.nav_fragment, homeFragment)
-                                    .commit();
-                            return true;
-                        case R.id.messageFragment:
-                            getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .setReorderingAllowed(true)
-                                    .replace(R.id.nav_fragment, messageFragment)
-                                    .commit();
-                            return true;
-                        case R.id.searchFragment:
-                            getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .setReorderingAllowed(true)
-                                    .replace(R.id.nav_fragment, searchFragment)
-                                    .commit();
-                            return true;
-                        case R.id.profileFragment:
-                            getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .setReorderingAllowed(true)
-                                    .replace(R.id.nav_fragment, profileFragment)
-                                    .commit();
-                            return true;
-                    }
-                    return false;
-                }
-            };
+    NavigationBarView.OnItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.homeFragment:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.nav_fragment, homeFragment)
+                            .commit();
+                    return true;
+                case R.id.messageFragment:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.nav_fragment, messageFragment)
+                            .commit();
+                    return true;
+                case R.id.searchFragment:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.nav_fragment, searchFragment)
+                            .commit();
+                    return true;
+                case R.id.profileFragment:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.nav_fragment, profileFragment)
+                            .commit();
+                    return true;
+            }
+            return false;
+        }
+    };
 }

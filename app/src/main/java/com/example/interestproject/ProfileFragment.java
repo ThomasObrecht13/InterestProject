@@ -1,6 +1,5 @@
 package com.example.interestproject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -27,16 +27,10 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
-
-        /*View view = getView();
-
-        logout = (Button) view.findViewById(R.id.logout);
-        name = (TextView) view.findViewById(R.id.name);
-        mail = (TextView) view.findViewById(R.id.mail);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        logout = (Button) getView().findViewById(R.id.logout);
+        name = (TextView) getView().findViewById(R.id.name);
+        mail = (TextView) getView().findViewById(R.id.mail);
 
 
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getContext());
@@ -47,13 +41,20 @@ public class ProfileFragment extends Fragment {
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View view) {
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(getContext(),MainActivity.class);
-                    startActivity(intent);
-                }
-            });*/
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_profile, container, false);
 
     }
 }

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "190877057800",
+    "firebase_url": "https://interestproject-fec08-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "interestproject-fec08",
     "storage_bucket": "interestproject-fec08.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "190877057800-e9nk9ai30ltgc7jvnut6stcpp9ra9ofk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.interestproject",
+            "certificate_hash": "633b8c2567e778d11c8b93ad4407798248251510"
+          }
+        },
         {
           "client_id": "190877057800-6a1h1j898bkiapci19v8uc88auuvu46i.apps.googleusercontent.com",
           "client_type": 3
