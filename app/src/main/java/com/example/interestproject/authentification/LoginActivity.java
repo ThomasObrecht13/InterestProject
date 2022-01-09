@@ -1,4 +1,4 @@
-package com.example.interestproject;
+package com.example.interestproject.authentification;
 
 import static android.content.ContentValues.TAG;
 
@@ -12,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.interestproject.MainActivity;
+import com.example.interestproject.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

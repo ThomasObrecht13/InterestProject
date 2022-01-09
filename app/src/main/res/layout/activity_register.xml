@@ -28,13 +28,29 @@
         android:textSize="30dp"
         />
 
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/registerName"
+
+        app:layout_constraintTop_toBottomOf="@+id/inscriptionTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+
+        android:background="@drawable/rounded_white_input"
+
+        android:textAlignment="center"
+        android:textColor="@color/blueApp"
+        android:hint="Entrer votre nom"
+        />
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:id="@+id/registerEmail"
 
-        app:layout_constraintTop_toBottomOf="@+id/inscriptionTitle"
+        app:layout_constraintTop_toBottomOf="@+id/registerName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"

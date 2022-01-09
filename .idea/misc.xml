@@ -3,12 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable-v24/rounded_blue_button.xml" value="0.1" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable-v24/separator_bar.xml" value="0.1" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1574074074074074" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable/rounded_blue_button.xml" value="0.1574074074074074" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/activity_navigation.xml" value="0.13541666666666666" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/activity_profile.xml" value="0.11730072463768115" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/activity_register.xml" value="0.2" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/connexion.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_home.xml" value="0.1859375" />
-        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_profile.xml" value="0.18614130434782608" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_profile.xml" value="0.4" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/inscripiton.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/menu/bottom_nav_bar.xml" value="0.1537037037037037" />
       </map>
