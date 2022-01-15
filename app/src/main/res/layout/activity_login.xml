@@ -42,6 +42,7 @@
             android:textColor="@color/blueApp"
             android:textAlignment="center"
             android:hint="Entrer votre identifiant"
+            android:text="te@te.te"
             android:background="@drawable/rounded_white_input"
 
             />
@@ -60,7 +61,7 @@
             android:textAlignment="center"
             android:textColor="@color/blueApp"
             android:hint="Entrer votre mot de passe"
-
+            android:text="testtest"
             android:id="@+id/editPassword"
             />
 
@@ -74,7 +75,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="10dp"
 
-            android:gravity="center"
+            android:textColor="@color/whiteApp"
             android:backgroundTint="@color/orangeApp"
             android:text="Connexion"
             />

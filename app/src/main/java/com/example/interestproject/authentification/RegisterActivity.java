@@ -16,20 +16,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.interestproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText etRegEmail, etRegPassword, etRegName;
     private TextView tvLoginHere;
     private Button btnRegister;
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +56,17 @@ public class RegisterActivity extends AppCompatActivity {
         tvLoginHere.setOnClickListener(view ->{
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         });
+
     }
 
     private void createUser(){
+        //Data from form
         String email = etRegEmail.getText().toString();
         String password = etRegPassword.getText().toString();
         String name = etRegName.getText().toString();
+
+        //access to database
+        db = FirebaseFirestore.getInstance();
 
         if (TextUtils.isEmpty(email)){
             etRegEmail.setError("Email cannot be empty");
@@ -78,8 +88,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(name)
-                                .setPhotoUri(Uri.parse("https://i.pinimg.com/280x280_RS/3c/71/08/3c7108261b89640ee56c90a1ee3a26c5.jpg"))
+                                .setPhotoUri(Uri.parse("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"))
                                 .build();
+
+
+                        DocumentReference documentReference = db.collection("users").document(user.getUid());
+                        //Map<String,Object> user = new HashMap<>();
 
                         user.updateProfile(profileUpdates)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
