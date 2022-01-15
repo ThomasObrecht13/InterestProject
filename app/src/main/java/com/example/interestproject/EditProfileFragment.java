@@ -73,7 +73,7 @@ public class EditProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //recupère les éléments de la vue
         etName = (EditText) view.findViewById(R.id.etName);
-        etEmail = (EditText) view.findViewById(R.id.etEmail);
+        //etEmail = (EditText) view.findViewById(R.id.etEmail);
         etPrenom = (EditText) view.findViewById(R.id.etPrenom);
         etDescription = (EditText) view.findViewById(R.id.etDescription);
         profilePicture = (CircleImageView) view.findViewById(R.id.profilePicture);

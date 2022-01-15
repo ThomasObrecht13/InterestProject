@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.interestproject.authentification.LoginActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
@@ -57,7 +59,7 @@ public class ProfileFragment extends Fragment {
         teName = (TextView) getView().findViewById(R.id.teName);
         teEmail = (TextView) getView().findViewById(R.id.teEmail);
         teDescription = (TextView) getView().findViewById(R.id.teDescription);
-        tePrenom = (TextView) getView().findViewById(R.id.tePrenom);
+        //tePrenom = (TextView) getView().findViewById(R.id.tePrenom);
         logout = (Button) getView().findViewById(R.id.logout);
 
         //Autre
@@ -77,37 +79,40 @@ public class ProfileFragment extends Fragment {
                     .into(profilePicture);
             teName.setText(name);
             teEmail.setText(email);
+
+            //Get and set on view custom data
+            DocumentReference docRef = db.collection("users").document(user.getUid());
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d("getData", "DocumentSnapshot data: " + document.getData());
+                            teDescription.setText(document.getString("description"));
+                            teName.setText(name+" "+document.getString("prenom"));
+                            //tePrenom.setText(document.getString("prenom"));
+
+                        } else {
+                            Log.d("getData", "No such document");
+                        }
+                    } else {
+                        Log.d("getData", "get failed with ", task.getException());
+                    }
+                }
+            });
         }else{
             Log.i("user?","non");
         }
 
-/*
+        /*
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getContext());
         if(signInAccount != null){
-            name.setText(signInAccount.getDisplayName());
-            mail.setText(signInAccount.getEmail());
-        }
-*/
-        //Get and set on view custom data
-        DocumentReference docRef = db.collection("users").document(user.getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d("getData", "DocumentSnapshot data: " + document.getData());
-                        teDescription.setText(document.getString("description"));
-                        tePrenom.setText(document.getString("prenom"));
+            teName.setText(signInAccount.getDisplayName());
+            teEmail.setText(signInAccount.getEmail());
+        }*/
 
-                    } else {
-                        Log.d("getData", "No such document");
-                    }
-                } else {
-                    Log.d("getData", "get failed with ", task.getException());
-                }
-            }
-        });
+
 
         /*------------------
             Redirection
