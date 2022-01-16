@@ -61,7 +61,11 @@ public class HomeFragment extends Fragment {
         Glide.with(view.getContext())
                 .load(uri)
                 .into(imageView1);
-
+        
+        imageView1 = view.findViewById(R.id.imageView7);
+        Glide.with(view.getContext())
+                .load(uri)
+                .into(imageView1);
         imageView1 = view.findViewById(R.id.imageUserCenterHome);
         Glide.with(view.getContext())
                 .load(uri)
