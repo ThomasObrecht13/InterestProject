@@ -30,7 +30,7 @@
         android:textSize="30dp"
 
         />
-
+<!--
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,26 +44,314 @@
         android:text="Aucun(e)s ami(e)s en ligne"
 
         />
+        ____________________
+        Ajout brut de la liste d'amis
+        -->
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
+        app:layout_constraintBottom_toTopOf="@+id/recommandationTitle"
+        android:scrollbars="none"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/relativeLayout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    >
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:id="@+id/imageView1"
+
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/imageView1"
+                        android:layout_below="@+id/imageView1"
+
+                        android:text="User 1"
+                        android:textColor="@color/blueApp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="13dp"
+                        />
+                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                app:layout_constraintLeft_toRightOf="@+id/relativeLayout1"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/imageView2"
+
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView2"
+                    android:layout_below="@+id/imageView2"
+
+                    android:text="User 2"
+                    android:textColor="@color/blueApp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relativeLayout3"
+                app:layout_constraintLeft_toRightOf="@+id/relativeLayout2"
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/imageView3"
+
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView3"
+                    android:layout_below="@+id/imageView3"
+
+                    android:text="User 3"
+                    android:textColor="@color/blueApp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relativeLayout4"
+                app:layout_constraintLeft_toRightOf="@+id/relativeLayout3"
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/imageView4"
+
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView4"
+                    android:layout_below="@+id/imageView4"
+
+                    android:text="User 4"
+                    android:textColor="@color/blueApp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relativeLayout5"
+                app:layout_constraintLeft_toRightOf="@+id/relativeLayout4"
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/imageView5"
+
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView5"
+                    android:layout_below="@+id/imageView5"
+
+                    android:text="User 5"
+                    android:textColor="@color/blueApp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relativeLayout6"
+                app:layout_constraintLeft_toRightOf="@+id/relativeLayout5"
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/imageView6"
+
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView6"
+                    android:layout_below="@+id/imageView6"
+
+                    android:text="User 6"
+                    android:textColor="@color/blueApp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    />
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </HorizontalScrollView>
+
 
     <TextView
 
+        android:id="@+id/recommandationTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recoTitle"
 
-        android:background="@drawable/separator_bar"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView1"
 
-        app:layout_constraintTop_toBottomOf="@+id/listEmptyFriend"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
+        android:text="Recommandation"
+        android:textAlignment="center"
+        android:textSize="30dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageUserCenterHome"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/recommandationTitle"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        android:padding="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userNameHome"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageUserCenterHome"
+        android:text="Nom Prenom"
+        android:textColor="@color/blueApp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/interestUser"
+        app:layout_constraintTop_toBottomOf="@+id/userNameHome"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/but1"
+            android:backgroundTint="@color/orangeApp"
+
+            android:textAlignment="center"
+            android:text="Sport"
+            android:textSize="10dp"
+            android:textColor="@color/whiteApp"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/orangeApp"
+            android:textColor="@color/white"
+
+            android:textAlignment="center"
+            android:text="Cinéma"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:backgroundTint="@color/white"
+            android:textColor="@color/blueApp"
+
+            android:textAlignment="center"
+            android:text="Musique"
+            android:textSize="10dp"
+            />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addFriendButton"
+
+        app:layout_constraintTop_toBottomOf="@id/interestUser"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="60dp"
+
+        android:backgroundTint="@color/blueApp"
+        android:textColor="@color/white"
 
         android:textAlignment="center"
-        android:text="Recommandation"
-        android:textSize="30dp"
+        android:text="Ajouter"
+        android:textSize="10dp"
         />
-    
-    
+
 
 
 
