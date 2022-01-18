@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
-
+    boolean isNew;
 
     @Override
     protected void onStart() {
@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.firebase_signIn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("name",String.valueOf(name.getText()));
                 signInWithEmailAndPassword(String.valueOf(name.getText()),String.valueOf(passwd.getText()));
             }
         });
@@ -88,6 +87,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //FORGOT PASSWORD
+        findViewById(R.id.forgotPasswordBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ForgotPasswordActivity = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(ForgotPasswordActivity);
+            }
+        });
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -108,7 +115,9 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            isNew = task.getResult().getAdditionalUserInfo().isNewUser();
                             Intent navigationActivity = new Intent(LoginActivity.this, MainActivity.class);
+                            navigationActivity.putExtra("isNew",isNew);
                             startActivity(navigationActivity);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -120,6 +129,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
         // [END sign_in_with_email]
+
+
     }
 
     //GOOGLE AUTHENTIFICATION METHODS
@@ -136,6 +147,8 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
                 Intent navigationActivity = new Intent(LoginActivity.this, MainActivity.class);
+                Log.i("isNew", String.valueOf(isNew));
+                navigationActivity.putExtra("isNew",isNew);
                 startActivity(navigationActivity);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -154,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            isNew = task.getResult().getAdditionalUserInfo().isNewUser();
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

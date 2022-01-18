@@ -8,6 +8,15 @@
     android:background="@color/whiteApp">
 
 
+    <androidx.appcompat.widget.Toolbar
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar"
+        app:title=""
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@android:color/transparent">
+
+    </androidx.appcompat.widget.Toolbar>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePicture"
@@ -17,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
 
         />
 
@@ -74,28 +83,11 @@
     />
 
 
-    <Button
-        android:id="@+id/toEditProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@+id/teEmail"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-
-        android:backgroundTint="@color/blueApp"
-        android:textColor="@color/whiteApp"
-        android:textSize="12dp"
-        android:text="Modifier votre profile"
-        />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/scrollViewDescription"
-        app:layout_constraintTop_toBottomOf="@+id/toEditProfile"
+        app:layout_constraintTop_toBottomOf="@+id/teEmail"
         app:layout_constraintBottom_toTopOf="@id/interestSrollView"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
@@ -106,6 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
+
+            android:textAlignment="center"
             android:layout_marginHorizontal="15dp"
             android:layout_marginBottom="10dp"
 
@@ -120,8 +114,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/scrollViewDescription"
-        app:layout_constraintBottom_toTopOf="@+id/logout"
-        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="5dp"
         android:scrollbars="none"
 
@@ -259,22 +253,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </HorizontalScrollView>
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="60dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-
-        android:backgroundTint="@color/orangeApp"
-        android:textColor="@color/whiteApp"
-        android:text="Logout"
-    />
 
 
 

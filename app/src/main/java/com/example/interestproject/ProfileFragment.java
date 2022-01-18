@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +12,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.interestproject.authentification.ForgotPasswordActivity;
 import com.example.interestproject.authentification.LoginActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
@@ -35,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
     //Element de la vue
     TextView teName, teEmail, tePrenom, teDescription;
-    Button logout,editProfile;
+    Button logout, editProfile;
     CircleImageView profilePicture;
     NavigationBarView navigationBarView;
     MenuItem more;
@@ -52,6 +50,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //Element de la vue
@@ -60,7 +59,6 @@ public class ProfileFragment extends Fragment {
         teEmail = (TextView) getView().findViewById(R.id.teEmail);
         teDescription = (TextView) getView().findViewById(R.id.teDescription);
         //tePrenom = (TextView) getView().findViewById(R.id.tePrenom);
-        logout = (Button) getView().findViewById(R.id.logout);
 
         //Autre
         db = FirebaseFirestore.getInstance();
@@ -88,9 +86,8 @@ public class ProfileFragment extends Fragment {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            Log.d("getData", "DocumentSnapshot data: " + document.getData());
                             teDescription.setText(document.getString("description"));
-                            teName.setText(name+" "+document.getString("prenom"));
+                            teName.setText(name + " " + document.getString("prenom"));
                             //tePrenom.setText(document.getString("prenom"));
 
                         } else {
@@ -101,8 +98,8 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             });
-        }else{
-            Log.i("user?","non");
+        } else {
+            Log.i("user?", "non");
         }
 
         /*
@@ -118,33 +115,38 @@ public class ProfileFragment extends Fragment {
             Redirection
         ------------------*/
 
-        //Modification profile
-        editProfile = (Button) getView().findViewById(R.id.toEditProfile);
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editProfile.setVisibility(view.INVISIBLE);
+        //Option Menu
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle("");
 
-                editProfileFragment = new EditProfileFragment();
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .setReorderingAllowed(true)
-                        .replace(R.id.nav_fragment, editProfileFragment)
-                        .commit();
+        toolbar.inflateMenu(R.menu.menu_option_profil);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //Modification profile
+                if (item.getItemId() == R.id.edit_profile_btn) {
+                    editProfileFragment = new EditProfileFragment();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.nav_fragment, editProfileFragment)
+                            .commit();
+                }
+                //Logout
+                if (item.getItemId() == R.id.logout_btn) {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
+                //Logout
+                if (item.getItemId() == R.id.forgotPasswordBtn) {
+                    Intent ForgotPasswordActivity = new Intent(getContext(), com.example.interestproject.authentification.ForgotPasswordActivity.class);
+                    startActivity(ForgotPasswordActivity);
+                }
+                return false;
             }
         });
-        //Logout
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -153,4 +155,5 @@ public class ProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile, container, false);
 
     }
+
 }

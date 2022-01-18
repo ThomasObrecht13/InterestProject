@@ -5,8 +5,10 @@
       <map>
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/drawable-v24/rounded_orange_button.xml" value="0.2375" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/drawable-v24/separator_bar.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/drawable/rounded_orange_button.xml" value="0.2375" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/drawable/rounded_orange_button_without_padding.xml" value="0.2375" />
+        <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/activity_forgot_password.xml" value="0.26766304347826086" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/activity_login.xml" value="0.2115036231884058" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/activity_register.xml" value="0.29739583333333336" />
@@ -18,6 +20,8 @@
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/grid_view_items_filter_search.xml" value="0.2520833333333333" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/gridview.xml" value="0.26992753623188404" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/menu/bottom_nav_bar.xml" value="0.2734375" />
+        <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/menu/test_fragment_menu.xml" value="0.31979166666666664" />
+        <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/menu/test_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/menu/top_app_bar.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable-v24/rounded_blue_button.xml" value="0.1" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable-v24/separator_bar.xml" value="0.1" />

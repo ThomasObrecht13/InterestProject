@@ -244,6 +244,7 @@
                     android:layout_marginTop="13dp"
                     />
             </RelativeLayout>
+            
             <RelativeLayout
                 android:id="@+id/relativeLayout7"
                 app:layout_constraintLeft_toRightOf="@+id/relativeLayout6"
@@ -378,8 +379,5 @@
         android:text="Ajouter"
         android:textSize="10dp"
         />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/forgotPasswordBtn"
+        android:title="Changer de mot de passe"
+        app:showAsAction="never">
+    </item>
+
+    <item android:id="@+id/edit_profile_btn"
+        android:title="Modifier votre profile"
+        app:showAsAction="never">
+    </item>
+
+    <item android:id="@+id/logout_btn"
+        android:title="Déconnexion"
+        app:showAsAction="never">
+    </item>
+
+</menu>

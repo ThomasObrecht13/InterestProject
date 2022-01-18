@@ -3,7 +3,11 @@ package com.example.interestproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 
@@ -27,11 +31,21 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setSelectedItemId(R.id.homeFragment);
         bottomNavigationView.setOnItemSelectedListener(navListener);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.nav_fragment, profileFragment)
-                .commit();
+        Intent intent = getIntent();
+        boolean isNew = intent.getBooleanExtra("isNew",false);
+        if(isNew) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.nav_fragment, profileFragment)
+                    .commit();
+        }else{
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.nav_fragment, homeFragment)
+                    .commit();
+        }
     }
 
     private NavigationBarView.OnItemSelectedListener navListener = new
@@ -71,4 +85,5 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
 }

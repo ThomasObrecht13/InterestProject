@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment {
         //Ajout brut des images utilisateurs
         Uri uri = Uri.parse("https://png.pngtree.com/element_our/20200610/ourlarge/pngtree-character-default-avatar-image_2237203.jpg");
         CircleImageView imageView1;
+
         imageView1 = view.findViewById(R.id.imageView1);
             Glide.with(view.getContext())
                     .load(uri)
@@ -61,7 +62,7 @@ public class HomeFragment extends Fragment {
         Glide.with(view.getContext())
                 .load(uri)
                 .into(imageView1);
-        
+
         imageView1 = view.findViewById(R.id.imageView7);
         Glide.with(view.getContext())
                 .load(uri)
