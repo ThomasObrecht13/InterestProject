@@ -15,6 +15,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="10dp"
+        android:textColor="@color/blueApp"
+
         android:text="Message"
         android:textSize="30dp"
         android:gravity="center"
@@ -57,11 +59,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/messNOm1"
                 android:text="Nom Prénom"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textColor="@color/blueApp"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/messNOm1"
+                android:textColor="@color/blueApp"
 
                 android:text="dernier message"/>
         </RelativeLayout>
@@ -90,11 +95,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/messNom2"
                 android:text="Nom Prénom"
+                android:textColor="@color/blueApp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/messNom2"
+                android:textColor="@color/blueApp"
 
                 android:text="dernier message"/>
         </RelativeLayout>
@@ -122,11 +129,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/messNom3"
+                android:textColor="@color/blueApp"
                 android:text="Nom Prénom"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/blueApp"
                 android:layout_below="@+id/messNom3"
 
                 android:text="dernier message"/>
@@ -156,11 +165,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/messNom4"
                 android:text="Nom Prénom"
+                android:textColor="@color/blueApp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/messNom4"
+                android:textColor="@color/blueApp"
 
                 android:text="dernier message"/>
         </RelativeLayout>

@@ -8,7 +8,7 @@
     </item>
 
     <item android:id="@+id/edit_profile_btn"
-        android:title="Modifier votre profile"
+        android:title="Modifier votre profil"
         app:showAsAction="never">
     </item>
 

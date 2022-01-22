@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -68,13 +70,21 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //EMAIL PASSWORD AUTHENTIFICATION
-        EditText name = findViewById(R.id.editIdentifiant);
-        EditText passwd = findViewById(R.id.editPassword);
+        EditText etName = findViewById(R.id.editIdentifiant);
+        EditText etPasswd = findViewById(R.id.editPassword);
+
+
 
         findViewById(R.id.firebase_signIn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signInWithEmailAndPassword(String.valueOf(name.getText()),String.valueOf(passwd.getText()));
+                String name = etName.getText().toString();
+                String passwd = etPasswd.getText().toString();
+
+                if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(passwd))
+                    signInWithEmailAndPassword(String.valueOf(name), String.valueOf(passwd));
+                else
+                    Toast.makeText(getApplicationContext(),"Veuillez entrer vos identifiants",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -82,10 +92,12 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent registerActivity = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(registerActivity);
             }
         });
+
 
         //FORGOT PASSWORD
         findViewById(R.id.forgotPasswordBtn).setOnClickListener(new View.OnClickListener() {
