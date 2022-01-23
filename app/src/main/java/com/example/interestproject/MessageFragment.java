@@ -32,7 +32,7 @@ public class MessageFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //Ajout brut des images utilisateurs
         Uri uri = Uri.parse("https://png.pngtree.com/element_our/20200610/ourlarge/pngtree-character-default-avatar-image_2237203.jpg");
-        CircleImageView imageView1;
+        CircleImageView imageView1;/*
         imageView1 = view.findViewById(R.id.messPicture1);
         Glide.with(view.getContext())
                 .load(uri)
@@ -51,6 +51,6 @@ public class MessageFragment extends Fragment {
         imageView1 = view.findViewById(R.id.messPicture4);
         Glide.with(view.getContext())
                 .load(uri)
-                .into(imageView1);
+                .into(imageView1);*/
     }
 }

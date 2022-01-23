@@ -2,6 +2,7 @@ package com.example.interestproject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.interestproject.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,6 +34,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -61,14 +68,31 @@ public class EditProfileFragment extends Fragment {
 
     FirebaseFirestore db;
     FirebaseAuth mAuth;
-    FirebaseUser user;
+    FirebaseUser userAuth;
+    DatabaseReference reference;
+
+    private Activity mActivity;
+
     Uri pictureSelected;
+    User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mActivity = null;
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -85,51 +109,55 @@ public class EditProfileFragment extends Fragment {
             Remplie les éléments de la vue avec les data de currentUser
         ------------------------------------------------------------------*/
         mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        if(user != null) {
-            //default data
-            etName.setText(user.getDisplayName());
-            //etEmail.setText(user.getEmail());
+        userAuth = mAuth.getCurrentUser();
 
-            Glide.with(getContext())
-                    .load(user.getPhotoUrl())
-                    .into(profilePicture);
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(userAuth.getUid());
 
-            //get custom data from currentUser
-            DocumentReference docRef = db.collection("users").document(user.getUid());
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Log.d("getData", "DocumentSnapshot data: " + document.getData());
-                            //remplit éléments vue avec les data de currentUser
-                            etDescription.setText(document.getString("description"));
-                            etPrenom.setText(document.getString("prenom"));
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
 
-                        } else {
-                            Log.d("getData", "No such document");
-                        }
+                etName.setText(user.getUsername());
+
+                etPrenom.setText(user.getPrenom());
+
+                etDescription.setText(user.getDescription());
+
+                if (mActivity != null) { //evite les crash
+                    if (user.getImageURL().equals("default")) {
+
+                        Glide.with(getContext())
+                                .load("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg")
+                                .into(profilePicture);
                     } else {
-                        Log.d("getData", "get failed with ", task.getException());
+                        Glide.with(getContext())
+                                .load(user.getImageURL())
+                                .into(profilePicture);
                     }
                 }
-            });
-        }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         /*-------------
           EDIT USER
          -------------*/
+
+        user =  new User();
         //Edit profile Picture
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //open imagePicker
+
                 getImg();
+
             }
         });
-
         //Edit default/custom data user
         editProfile = (Button) view.findViewById(R.id.editProfile);
         editProfile.setOnClickListener(new View.OnClickListener() {
@@ -142,53 +170,18 @@ public class EditProfileFragment extends Fragment {
                 String prenom = etPrenom.getText().toString();
                 String description = etDescription.getText().toString();
 
-                //if data != empty
-               /* if (TextUtils.isEmpty(email)) {
-                    etEmail.setError("Email cannot be empty");
-                    etEmail.requestFocus();
-                } else*/ if (TextUtils.isEmpty(name)) {
-                    etName.setError("Password cannot be empty");
-                    etName.requestFocus();
-                } else if (TextUtils.isEmpty(prenom)) {
-                    etPrenom.setError("Name cannot be empty");
-                    etPrenom.requestFocus();
-                } else if (TextUtils.isEmpty(description)) {
-                    etDescription.setError("Name cannot be empty");
-                    etDescription.requestFocus();
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(prenom) || TextUtils.isEmpty(description)) {
+                    etName.setError("Remplie !");
                 } else {
-                    FirebaseUser userAuth = mAuth.getCurrentUser();
 
-                    //edit default user data
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(name)
-                            .build();
-
-                    //execute default update
-                    userAuth.updateProfile(profileUpdates)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d("updateUser", "User profile updated.");
-                                    }
-                                }
-                            });
-
-                    //edit custom user data
-                    DocumentReference documentReference = db.collection("users").document(userAuth.getUid());
-
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("prenom", prenom);
-                    user.put("description", description);
-
-                    //execute custom update
-                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(@NonNull Void unused) {
-                            Log.d("editUser", "onSuccess: user Profile edited");
-                        }
-                    });
+                    user =  new User(userAuth.getUid(),name,prenom,description,"default");
                 }
+                Log.i("photo1",user.getImageURL());
+
+                /*
+                Pour que l'image soit modifier avant les retour a ProfileFragment
+                Sinon le changement ne se fait pas
+                 */
                 if (pictureSelected != null) {
                     Bitmap bitmap;
                     try {
@@ -200,6 +193,11 @@ public class EditProfileFragment extends Fragment {
                         e.printStackTrace();
                         Log.i("ProfilePicturePickUp", "GET FROM LOCAL.: RUIM");
                     }
+                }else{
+                    Map<String, Object> childUpdates = new HashMap<>();
+                    reference = FirebaseDatabase.getInstance().getReference("Users");
+                    childUpdates.put("/"+userAuth.getUid()+"/", user.toMap());
+                    reference.updateChildren(childUpdates);
                 }
 
                 //return profileFragment
@@ -209,6 +207,7 @@ public class EditProfileFragment extends Fragment {
                         .setReorderingAllowed(true)
                         .replace(R.id.nav_fragment, profileFragment)
                         .commit();
+
             }
         });
     }
@@ -249,7 +248,7 @@ public class EditProfileFragment extends Fragment {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference storageRef = storage.getReference();
-        final StorageReference mountainsRef = storageRef.child("images/"+user.getUid()+".jpg");
+        final StorageReference mountainsRef = storageRef.child("images/"+userAuth.getUid()+".jpg");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -283,10 +282,13 @@ public class EditProfileFragment extends Fragment {
     //modifie l'image de currentUser
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void setProfilePic(Uri uri){
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setPhotoUri(uri)
-                .build();
-        user.updateProfile(profileUpdates);
+        //Modification de User ImageURL
+        user.setImageURL(String.valueOf(uri));
+        //Push dans la DB
+        Map<String, Object> childUpdates = new HashMap<>();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        childUpdates.put("/"+userAuth.getUid()+"/", user.toMap());
+        reference.updateChildren(childUpdates);
     }
 
     //open imagePickerActivity

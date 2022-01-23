@@ -28,6 +28,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -178,9 +183,24 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            isNew = task.getResult().getAdditionalUserInfo().isNewUser();
-                            updateUI(user);
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                            assert firebaseUser != null;
+
+                            isNew = Objects.requireNonNull(task.getResult().getAdditionalUserInfo()).isNewUser();
+                            if(isNew){
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+                                HashMap<String, String> hashMap = new HashMap<>();
+
+                                hashMap.put("id", firebaseUser.getUid());
+                                hashMap.put("username", firebaseUser.getDisplayName());
+                                hashMap.put("imageURL", "default");
+                                hashMap.put("prenom", null);
+                                hashMap.put("description", null);
+
+                                reference.setValue(hashMap);
+                            }
+                            updateUI(firebaseUser);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

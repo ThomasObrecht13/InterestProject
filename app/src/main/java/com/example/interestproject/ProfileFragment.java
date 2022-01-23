@@ -1,5 +1,7 @@
 package com.example.interestproject;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,15 +18,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.interestproject.authentification.ForgotPasswordActivity;
 import com.example.interestproject.authentification.LoginActivity;
+import com.example.interestproject.authentification.RegisterActivity;
+import com.example.interestproject.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,18 +44,34 @@ public class ProfileFragment extends Fragment {
     NavigationBarView navigationBarView;
     MenuItem more;
 
+    private Activity mActivity;
+
     //Autre
     EditProfileFragment editProfileFragment;
     FirebaseUser user;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
 
+    DatabaseReference reference;
+    FirebaseUser firebaseUser;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        mActivity = getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mActivity = null;
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -61,6 +83,59 @@ public class ProfileFragment extends Fragment {
         //tePrenom = (TextView) getView().findViewById(R.id.tePrenom);
 
         //Autre
+        mAuth = FirebaseAuth.getInstance();
+
+        user = mAuth.getCurrentUser();
+
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        Log.i("idUser",user.getUid());
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                User user = dataSnapshot.getValue(User.class);
+                if(user == null) {
+                    teName.setText("Veuillez modifier votre profile");
+                    return;
+                }
+                String name = user.getUsername();
+                if(user.getPrenom() != null)
+                    name += " "+user.getPrenom();
+                teName.setText(name);
+
+                teDescription.setText(user.getDescription());
+                if (mActivity != null) {
+                    if(user.getImageURL().equals("default")){
+
+                        Glide.with(getContext())
+                                .load("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg")
+                                .into(profilePicture);
+                    }else {
+                        Glide.with(getContext())
+                                .load(user.getImageURL())
+                                .into(profilePicture);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        reference.child("users").child(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.i("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.i("firebase", String.valueOf(task.getResult().getValue()));
+                }
+            }
+        });
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -68,7 +143,7 @@ public class ProfileFragment extends Fragment {
         /*------------------
             Edit View
         ------------------*/
-        if (user != null) {
+        /*if (user != null) {
             // Default data
             String name = user.getDisplayName();
             String email = user.getEmail();
@@ -86,8 +161,8 @@ public class ProfileFragment extends Fragment {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            teDescription.setText(document.getString("description"));
-                            teName.setText(name + " " + document.getString("prenom"));
+                            teDescription.setText(document.getString(getString(R.string.userDescription)));
+                            teName.setText(name + " " + document.getString(getString(R.string.userPrenom)));
                             //tePrenom.setText(document.getString("prenom"));
 
                         } else {
@@ -125,6 +200,9 @@ public class ProfileFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 //Modification profile
                 if (item.getItemId() == R.id.edit_profile_btn) {
+                 //   Intent EditProfileActivity  = new Intent(getContext(), EditProfileActivity.class);
+                  //  startActivity(EditProfileActivity);
+
                     editProfileFragment = new EditProfileFragment();
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
