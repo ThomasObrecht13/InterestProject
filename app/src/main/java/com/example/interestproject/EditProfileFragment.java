@@ -116,7 +116,7 @@ public class EditProfileFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                user = dataSnapshot.getValue(User.class);
 
                 etName.setText(user.getUsername());
 
@@ -172,11 +172,11 @@ public class EditProfileFragment extends Fragment {
 
                 if (TextUtils.isEmpty(name) || TextUtils.isEmpty(prenom) || TextUtils.isEmpty(description)) {
                     etName.setError("Remplie !");
-                } else {
-
-                    user =  new User(userAuth.getUid(),name,prenom,description,"default");
+                }else{
+                    user.setUsername(name);
+                    user.setPrenom(prenom);
+                    user.setDescription(description);
                 }
-                Log.i("photo1",user.getImageURL());
 
                 /*
                 Pour que l'image soit modifier avant les retour a ProfileFragment
@@ -194,6 +194,7 @@ public class EditProfileFragment extends Fragment {
                         Log.i("ProfilePicturePickUp", "GET FROM LOCAL.: RUIM");
                     }
                 }else{
+                    //user.setImageURL(userAuth.getPhotoUrl());
                     Map<String, Object> childUpdates = new HashMap<>();
                     reference = FirebaseDatabase.getInstance().getReference("Users");
                     childUpdates.put("/"+userAuth.getUid()+"/", user.toMap());
