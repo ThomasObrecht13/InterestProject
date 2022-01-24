@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,16 +49,19 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
                     .load(user.getImageURL())
                     .into(holder.profilePictureMessage);
         }
+
     }
 
-
+    public User getItem(int position) {
+        return mUsers.get(position);
+    }
 
     @Override
     public int getItemCount() {
         return mUsers.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         public TextView username;
         public CircleImageView profilePictureMessage;
@@ -66,7 +70,18 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
             super(itemView);
             username = itemView.findViewById(R.id.user_item_message_username);
             profilePictureMessage = itemView.findViewById(R.id.user_item_message_profil_picture);
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            //clickListener.onItemClick(getAdapterPosition(), v);
+
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
         }
     }
 }

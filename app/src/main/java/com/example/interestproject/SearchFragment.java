@@ -1,11 +1,13 @@
 package com.example.interestproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -70,7 +72,32 @@ public class SearchFragment extends Fragment {
         mUsers = new ArrayList<>();
 
         readUser();
-        Log.i("username : ", String.valueOf(mUsers));
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        User newUser = userAdapterSearch.getItem(position);
+                        //Toast.makeText(getContext(), newUser.getUsername(),Toast.LENGTH_SHORT).show();
+
+                        ProfileFragment profileFragment = new ProfileFragment();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("idUser",newUser.getId()); // Put anything what you want
+
+                        profileFragment.setArguments(bundle);
+
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .setReorderingAllowed(true)
+                                .replace(R.id.nav_fragment, profileFragment)
+                                .commit();
+                        // do whatever
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );        Log.i("username : ", String.valueOf(mUsers));
 
         return view;
     }

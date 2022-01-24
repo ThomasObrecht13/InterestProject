@@ -51,6 +51,9 @@ public class UserAdapterSearch extends RecyclerView.Adapter<UserAdapterSearch.Vi
     }
 
 
+    public User getItem(int position) {
+        return mUsers.get(position);
+    }
 
     @Override
     public int getItemCount() {

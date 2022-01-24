@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,11 +50,10 @@ public class ProfileFragment extends Fragment {
     //Autre
     EditProfileFragment editProfileFragment;
     FirebaseUser user;
-    FirebaseFirestore db;
     FirebaseAuth mAuth;
 
     DatabaseReference reference;
-    FirebaseUser firebaseUser;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,149 +82,99 @@ public class ProfileFragment extends Fragment {
         teDescription = (TextView) getView().findViewById(R.id.teDescription);
         //tePrenom = (TextView) getView().findViewById(R.id.tePrenom);
 
-        //Autre
-        mAuth = FirebaseAuth.getInstance();
 
-        user = mAuth.getCurrentUser();
 
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-        Log.i("idUser",user.getUid());
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            Log.i("OUI","ouhf bdsuvqglijj hknbfr");
+            String id = (String) bundle.get("idUser");
+            reference = FirebaseDatabase.getInstance().getReference("Users").child(id);
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        }else {
+            //Pour voir son profil
 
-                User user = dataSnapshot.getValue(User.class);
-                if(user == null) {
-                    teName.setText("Veuillez modifier votre profile");
-                    return;
-                }
-                String name = user.getUsername();
-                if(user.getPrenom() != null)
-                    name += " "+user.getPrenom();
-                teName.setText(name);
+            /*------------------
+                Redirection
+            ------------------*/
+            //Option Menu
+            Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+            toolbar.setTitle("");
 
-                teDescription.setText(user.getDescription());
-                if (mActivity != null) {
-                    if(user.getImageURL().equals("default")){
-
-                        Glide.with(getContext())
-                                .load("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg")
-                                .into(profilePicture);
-                    }else {
-                        Glide.with(getContext())
-                                .load(user.getImageURL())
-                                .into(profilePicture);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        reference.child("users").child(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.i("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    Log.i("firebase", String.valueOf(task.getResult().getValue()));
-                }
-            }
-        });
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-
-        /*------------------
-            Edit View
-        ------------------*/
-        /*if (user != null) {
-            // Default data
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Glide.with(getContext())
-                    .load(user.getPhotoUrl())
-                    .into(profilePicture);
-            teName.setText(name);
-            teEmail.setText(email);
-
-            //Get and set on view custom data
-            DocumentReference docRef = db.collection("users").document(user.getUid());
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            toolbar.inflateMenu(R.menu.menu_option_profil);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            teDescription.setText(document.getString(getString(R.string.userDescription)));
-                            teName.setText(name + " " + document.getString(getString(R.string.userPrenom)));
-                            //tePrenom.setText(document.getString("prenom"));
+                public boolean onMenuItemClick(MenuItem item) {
+                    //Modification profile
+                    if (item.getItemId() == R.id.edit_profile_btn) {
 
-                        } else {
-                            Log.d("getData", "No such document");
-                        }
-                    } else {
-                        Log.d("getData", "get failed with ", task.getException());
+
+                        editProfileFragment = new EditProfileFragment();
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .setReorderingAllowed(true)
+                                .replace(R.id.nav_fragment, editProfileFragment)
+                                .commit();
                     }
+                    //Logout
+                    if (item.getItemId() == R.id.logout_btn) {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                    //Logout
+                    if (item.getItemId() == R.id.forgotPasswordBtn) {
+                        Intent ForgotPasswordActivity = new Intent(getContext(), com.example.interestproject.authentification.ForgotPasswordActivity.class);
+                        startActivity(ForgotPasswordActivity);
+                    }
+                    return false;
                 }
             });
-        } else {
-            Log.i("user?", "non");
+
+            //recupère l'user dans la DB
+            mAuth = FirebaseAuth.getInstance();
+            user = mAuth.getCurrentUser();
+            reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         }
 
-        /*
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(getContext());
-        if(signInAccount != null){
-            teName.setText(signInAccount.getDisplayName());
-            teEmail.setText(signInAccount.getEmail());
-        }*/
 
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                    User user = dataSnapshot.getValue(User.class);
+                    if (user == null) {
+                        teName.setText("Veuillez modifier votre profile");
+                        return;
+                    }
+                    String name = user.getUsername();
+                    if (user.getPrenom() != null)
+                        name += " " + user.getPrenom();
+                    teName.setText(name);
 
-        /*------------------
-            Redirection
-        ------------------*/
+                    teDescription.setText(user.getDescription());
+                    if (mActivity != null) {
+                        if (user.getImageURL().equals("default")) {
 
-        //Option Menu
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-
-        toolbar.inflateMenu(R.menu.menu_option_profil);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                //Modification profile
-                if (item.getItemId() == R.id.edit_profile_btn) {
-                 //   Intent EditProfileActivity  = new Intent(getContext(), EditProfileActivity.class);
-                  //  startActivity(EditProfileActivity);
-
-                    editProfileFragment = new EditProfileFragment();
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .setReorderingAllowed(true)
-                            .replace(R.id.nav_fragment, editProfileFragment)
-                            .commit();
+                            Glide.with(getContext())
+                                    .load("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg")
+                                    .into(profilePicture);
+                        } else {
+                            Glide.with(getContext())
+                                    .load(user.getImageURL())
+                                    .into(profilePicture);
+                        }
+                    }
                 }
-                //Logout
-                if (item.getItemId() == R.id.logout_btn) {
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
-                    startActivity(intent);
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
-                //Logout
-                if (item.getItemId() == R.id.forgotPasswordBtn) {
-                    Intent ForgotPasswordActivity = new Intent(getContext(), com.example.interestproject.authentification.ForgotPasswordActivity.class);
-                    startActivity(ForgotPasswordActivity);
-                }
-                return false;
-            }
-        });
-    }
+            });
+
+
+        }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

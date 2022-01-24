@@ -27,7 +27,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MessageFragment extends Fragment {
+public class MessageFragment extends Fragment  {
 
     private RecyclerView recyclerView;
 
