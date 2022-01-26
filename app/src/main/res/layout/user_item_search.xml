@@ -18,9 +18,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Demo"
-        android:textColor="#000"
         android:layout_below="@+id/user_item_search_profil_picture"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp" />
+        android:layout_marginTop="13dp"
+        android:textColor="@color/black"
+        />
 
 </RelativeLayout>

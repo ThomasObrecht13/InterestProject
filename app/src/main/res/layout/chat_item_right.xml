@@ -27,7 +27,7 @@
         android:text="hello"
         android:textSize="16dp"
         android:padding="8dp"
-
+        android:textColor="@color/white"
         android:id="@+id/show_message"
         />
     </RelativeLayout>

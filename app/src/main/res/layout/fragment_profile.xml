@@ -16,6 +16,15 @@
         android:layout_height="56dp"
         android:background="@android:color/transparent">
 
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/back_button_profil"
+            android:src="@drawable/back_arrow_blue"
+            android:background="@color/whiteApp"
+            android:visibility="gone"
+            />
+
     </androidx.appcompat.widget.Toolbar>
 
     <de.hdodenhof.circleimageview.CircleImageView

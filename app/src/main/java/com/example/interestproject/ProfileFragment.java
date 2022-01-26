@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class ProfileFragment extends Fragment {
     NavigationBarView navigationBarView;
     MenuItem more;
 
+    ImageButton backButton;
     private Activity mActivity;
 
     //Autre
@@ -86,10 +88,21 @@ public class ProfileFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         if(bundle != null){
-            Log.i("OUI","ouhf bdsuvqglijj hknbfr");
             String id = (String) bundle.get("idUser");
             reference = FirebaseDatabase.getInstance().getReference("Users").child(id);
-
+            backButton = getView().findViewById(R.id.back_button_profil);
+            backButton.setVisibility(View.VISIBLE);
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SearchFragment searchFragment= new SearchFragment();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.nav_fragment, searchFragment)
+                            .commit();
+                }
+            });
         }else {
             //Pour voir son profil
 

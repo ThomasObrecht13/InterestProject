@@ -6,20 +6,22 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_alignParentStart="true"
         android:src="@drawable/house_logo"
         android:id="@+id/profil_picture_chat_in_message"/>
 
     <TextView
+        android:id="@+id/show_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/profil_picture_chat_in_message"
-        android:layout_marginLeft="5dp"
-        android:background="@drawable/background_left_chat"
-        android:text="hello"
-        android:padding="8dp"
-        android:textSize="16dp"
 
-        android:id="@+id/show_message"
+        android:layout_toEndOf="@+id/profil_picture_chat_in_message"
+        android:background="@drawable/background_left_chat"
+        android:padding="8dp"
+        android:layout_marginLeft="10dp"
+        android:text="Hello"
+        android:textSize="16dp"
+        android:textColor="@color/black"
         />
 
 </RelativeLayout>
