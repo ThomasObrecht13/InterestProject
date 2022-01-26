@@ -37,4 +37,42 @@
 
 
     </androidx.appcompat.widget.Toolbar>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view_chat"
+        android:layout_below="@+id/toolbar_chat"
+        android:layout_above="@+id/bottom_chat"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_chat"
+        android:background="@color/blueApp"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/message_to_send"
+            android:layout_alignRight="@+id/send_message_btn"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:hint="Envoyer un message ..."
+            android:textColorHint="@color/whiteApp"
+            android:textColor="@color/whiteApp"
+            />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/send_message_btn"
+            android:src="@drawable/ic_baseline_send_24"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/blueApp"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>
