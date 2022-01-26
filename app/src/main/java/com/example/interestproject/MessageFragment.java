@@ -3,6 +3,7 @@ package com.example.interestproject;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.interestproject.adapter.UserAdapterMessage;
+import com.example.interestproject.model.Chat;
 import com.example.interestproject.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +37,12 @@ public class MessageFragment extends Fragment  {
     private UserAdapterMessage userAdapterMessage;
     private List<User> mUsers;
 
+
+    private List<String> userList;
+    FirebaseUser firebaseUser;
+    DatabaseReference reference;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +59,36 @@ public class MessageFragment extends Fragment  {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mUsers = new ArrayList<>();
 
-        readUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        mUsers = new ArrayList<>();
+        userList = new ArrayList<>();
+
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Chat chat = snapshot.getValue(Chat.class);
+
+                    if(chat.getSender().equals(firebaseUser.getUid())){
+                        userList.add(chat.getReceiver());
+                    }
+                    if( chat.getReceiver().equals((firebaseUser.getUid()))){
+                        userList.add(chat.getSender());
+                    }
+                }
+                readUser();
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -88,7 +123,13 @@ public class MessageFragment extends Fragment  {
                     User user = snapshot.getValue(User.class);
 
                     if(!user.getId().equals(firebaseUser.getUid())){
-                        mUsers.add(user);
+                        for(String id : userList){
+                            if(user.getId().equals(id)) {
+                                if(!mUsers.contains(user)){
+                                    mUsers.add(user);
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -102,33 +143,5 @@ public class MessageFragment extends Fragment  {
             }
         });
     }
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        //Ajout brut des images utilisateurs
-        Uri uri = Uri.parse("https://png.pngtree.com/element_our/20200610/ourlarge/pngtree-character-default-avatar-image_2237203.jpg");
-        CircleImageView imageView1;
-
-
-        /*
-        imageView1 = view.findViewById(R.id.messPicture1);
-        Glide.with(view.getContext())
-                .load(uri)
-                .into(imageView1);
-
-        imageView1 = view.findViewById(R.id.messPicture2);
-        Glide.with(view.getContext())
-                .load(uri)
-                .into(imageView1);
-        
-        imageView1 = view.findViewById(R.id.messPicture3);
-        Glide.with(view.getContext())
-                .load(uri)
-                .into(imageView1);
-
-        imageView1 = view.findViewById(R.id.messPicture4);
-        Glide.with(view.getContext())
-                .load(uri)
-                .into(imageView1);*/
-    }
 }
