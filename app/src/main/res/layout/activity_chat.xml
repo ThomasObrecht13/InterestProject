@@ -18,7 +18,7 @@
         <Button
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/house_logo"
+            android:background="@drawable/ic_baseline_arrow_back_ios_24"
             android:id="@+id/back_button_chat"
             android:layout_marginRight="20dp"/>
 
