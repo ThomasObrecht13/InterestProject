@@ -9,23 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_interest_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InterestProject">
-
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
-
+            android:exported="true"></activity>
         <activity
             android:name=".authentification.RegisterActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".authentification.ForgotPasswordActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".authentification.LoginActivity"
             android:exported="true">

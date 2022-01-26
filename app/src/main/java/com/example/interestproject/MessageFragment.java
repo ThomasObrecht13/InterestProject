@@ -1,5 +1,6 @@
 package com.example.interestproject;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -53,6 +54,24 @@ public class MessageFragment extends Fragment  {
         mUsers = new ArrayList<>();
 
         readUser();
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        User userSelected = userAdapterMessage.getItem(position);
+                        //Toast.makeText(getContext(), newUser.getUsername(),Toast.LENGTH_SHORT).show();
+
+                        ProfileFragment profileFragment = new ProfileFragment();
+                        Intent intent = new Intent(getActivity(),ChatActivity.class);
+                        intent.putExtra("userId",userSelected.getId());
+                        startActivity(intent);
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
 
         return view;
     }

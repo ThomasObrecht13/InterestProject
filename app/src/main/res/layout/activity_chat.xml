@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChatActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar_chat"
+        app:title=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blueApp"
+        >
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/house_logo"
+            android:id="@+id/back_button_chat"
+            android:layout_marginRight="20dp"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/profil_picture_chat_toolbar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/username_chat_toolbar"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            />
+
+
+    </androidx.appcompat.widget.Toolbar>
+</RelativeLayout>
