@@ -21,10 +21,12 @@ public class UserAdapterSearch extends RecyclerView.Adapter<UserAdapterSearch.Vi
 
     private Context mContext;
     private List<User> mUsers;
+    private boolean isChat;
 
-    public UserAdapterSearch(Context mContext, List<User> mUsers){
+    public UserAdapterSearch(Context mContext, List<User> mUsers, boolean isChat){
         this.mContext = mContext;
         this.mUsers = mUsers;
+        this.isChat = isChat;
     }
 
     @NonNull
@@ -48,6 +50,18 @@ public class UserAdapterSearch extends RecyclerView.Adapter<UserAdapterSearch.Vi
                     .load(user.getImageURL())
                     .into(holder.profilePictureMessage);
         }
+        if(isChat){
+            if(user.getStatus().equals("online")){
+                holder.img_on.setVisibility(View.VISIBLE);
+                holder.img_off.setVisibility(View.GONE);
+            }else{
+                holder.img_on.setVisibility(View.GONE);
+                holder.img_off.setVisibility(View.VISIBLE);
+            }
+        } else {
+            holder.img_on.setVisibility(View.GONE);
+            holder.img_off.setVisibility(View.GONE);
+        }
     }
 
 
@@ -60,16 +74,33 @@ public class UserAdapterSearch extends RecyclerView.Adapter<UserAdapterSearch.Vi
         return mUsers.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener, View.OnLongClickListener{
 
         public TextView username;
         public CircleImageView profilePictureMessage;
+
+        public CircleImageView img_on;
+        public CircleImageView img_off;
 
         public ViewHolder(View itemView){
             super(itemView);
             username = itemView.findViewById(R.id.user_item_search_username);
             profilePictureMessage = itemView.findViewById(R.id.user_item_search_profil_picture);
 
+            img_on = itemView.findViewById(R.id.online_circle);
+            img_off = itemView.findViewById(R.id.offline_circle);
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
         }
     }
 }

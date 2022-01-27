@@ -69,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
         username = findViewById(R.id.username_chat_toolbar);
         profilPicture = findViewById(R.id.profil_picture_chat_toolbar);
 
+
         btnToSend = findViewById(R.id.send_message_btn);
         messageToSend = findViewById(R.id.message_to_send);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -83,6 +84,15 @@ public class ChatActivity extends AppCompatActivity {
         //recupère les infos de l'utilisateur
         Intent intent = getIntent();
         String userId = intent.getStringExtra("userId");
+
+
+        profilPicture.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //TODO : renvoie faire le profil de l'utilisateur
+            }
+        });
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         btnToSend.setOnClickListener(new View.OnClickListener() {

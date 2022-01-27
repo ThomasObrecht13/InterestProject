@@ -35,6 +35,7 @@
             android:id="@+id/username_chat_toolbar"
             android:textStyle="bold"
             android:layout_marginLeft="20dp"
+            android:textColor="@color/white"
             />
 
 

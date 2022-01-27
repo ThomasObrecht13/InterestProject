@@ -9,12 +9,14 @@
     >
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:id="@+id/logo"
 
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
 
         android:src="@drawable/logo_interest_bleu"
         />
@@ -47,7 +49,6 @@
         />
         ____________________
         Ajout brut de la liste d'amis
-        -->
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView1"
         android:layout_width="match_parent"
@@ -122,7 +123,8 @@
                     android:layout_marginTop="13dp"
                     />
             </RelativeLayout>
-            <RelativeLayout
+
+    <RelativeLayout
                 android:id="@+id/relativeLayout3"
                 app:layout_constraintLeft_toRightOf="@+id/relativeLayout2"
                 android:layout_marginHorizontal="5dp"
@@ -280,6 +282,15 @@
 
     </HorizontalScrollView>
 
+-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/horizontal_recyclerview_home"
+        app:layout_constraintTop_toBottomOf="@+id/homeTitle"
+        app:layout_constraintBottom_toTopOf="@+id/recommandationTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 
     <TextView
 
@@ -288,7 +299,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView1"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_recyclerview_home"
         android:textColor="@color/blueApp"
 
         android:text="Recommandation"
