@@ -31,10 +31,6 @@ import java.util.List;
 
 public class SearchFragment extends Fragment {
 
-
-    GridView simpleGrid;
-
-
     private RecyclerView recyclerView;
 
     private UserAdapterSearch userAdapterSearch;
@@ -119,7 +115,7 @@ public class SearchFragment extends Fragment {
                     }
                 }
 
-                userAdapterSearch = new UserAdapterSearch(getContext(), mUsers);
+                userAdapterSearch = new UserAdapterSearch(getContext(), mUsers,false);
                 recyclerView.setAdapter(userAdapterSearch);
             }
 
