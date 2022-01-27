@@ -22,10 +22,12 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
 
     private Context mContext;
     private List<User> mUsers;
+    private boolean isChat;
 
-    public UserAdapterMessage(Context mContext, List<User> mUsers){
+    public UserAdapterMessage(Context mContext, List<User> mUsers, boolean isChat){
         this.mContext = mContext;
         this.mUsers = mUsers;
+        this.isChat = isChat;
     }
 
     @NonNull
@@ -50,6 +52,19 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
                     .into(holder.profilePictureMessage);
         }
 
+        if(isChat){
+            if(user.getStatus().equals("online")){
+                holder.img_on.setVisibility(View.VISIBLE);
+                holder.img_off.setVisibility(View.GONE);
+            }else{
+                holder.img_on.setVisibility(View.GONE);
+                holder.img_off.setVisibility(View.VISIBLE);
+            }
+        } else {
+            holder.img_on.setVisibility(View.GONE);
+            holder.img_off.setVisibility(View.GONE);
+        }
+
     }
 
     public User getItem(int position) {
@@ -65,11 +80,16 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
 
         public TextView username;
         public CircleImageView profilePictureMessage;
+        public CircleImageView img_on;
+        public CircleImageView img_off;
 
         public ViewHolder(View itemView){
             super(itemView);
             username = itemView.findViewById(R.id.user_item_message_username);
             profilePictureMessage = itemView.findViewById(R.id.user_item_message_profil_picture);
+
+            img_on = itemView.findViewById(R.id.online_circle);
+            img_off = itemView.findViewById(R.id.offline_circle);
             itemView.setOnClickListener(this);
         }
 

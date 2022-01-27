@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/user_item_message_profil_picture"
+        android:src="@mipmap/ic_launcher"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -18,8 +18,39 @@
         android:id="@+id/user_item_message_username"
         android:layout_toEndOf="@+id/user_item_message_profil_picture"
         android:layout_centerVertical="true"
+        android:text="hello"
         android:textStyle="bold"
         android:textColor="@color/black"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/online_circle"
+        app:civ_border_width="8dp"
+        app:civ_border_color="#5BD545"
+        android:layout_below="@id/user_item_message_username"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_toRightOf="@id/user_item_message_profil_picture"
+        android:layout_toEndOf="@id/user_item_message_profil_picture"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/offline_circle"
+        app:civ_border_width="8dp"
+        app:civ_border_color="#bfbfbf"
+        android:layout_below="@id/user_item_message_username"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_toRightOf="@id/user_item_message_profil_picture"
+        android:layout_toEndOf="@id/user_item_message_profil_picture"
+        android:src="@mipmap/ic_launcher_round"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

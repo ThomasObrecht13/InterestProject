@@ -133,7 +133,7 @@ public class MessageFragment extends Fragment  {
                     }
                 }
 
-                userAdapterMessage = new UserAdapterMessage(getContext(), mUsers);
+                userAdapterMessage = new UserAdapterMessage(getContext(), mUsers,true);
                 recyclerView.setAdapter(userAdapterMessage);
             }
 

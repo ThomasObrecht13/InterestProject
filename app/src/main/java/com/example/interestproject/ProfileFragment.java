@@ -131,7 +131,7 @@ public class ProfileFragment extends Fragment {
                     //Logout
                     if (item.getItemId() == R.id.logout_btn) {
                         FirebaseAuth.getInstance().signOut();
-                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        Intent intent = new Intent(getContext(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
                     //Logout

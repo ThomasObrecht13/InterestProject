@@ -11,13 +11,15 @@ public class User {
     private String imageURL;
     private String description;
     private String prenom;
+    private String status;
 
-    public User(String id, String username, String prenom, String description, String imageURL){
+    public User(String id, String username, String prenom, String description, String imageURL, String status){
         this.id = id;
         this.username = username;
         this.prenom = prenom;
         this.description = description;
         this.imageURL = imageURL;
+        this.status = status;
     }
 
     public User() {
@@ -75,4 +77,13 @@ public class User {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }
