@@ -94,7 +94,7 @@
         android:layout_height="200dp"
         android:id="@+id/scrollViewDescription"
         app:layout_constraintTop_toBottomOf="@+id/teEmail"
-        app:layout_constraintBottom_toTopOf="@id/interestSrollView"
+        app:layout_constraintBottom_toTopOf="@id/open_new_chat_btn"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
 
@@ -114,6 +114,18 @@
 
             />
     </ScrollView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/open_new_chat_btn"
+        app:layout_constraintTop_toBottomOf="@+id/scrollViewDescription"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/interestSrollView"
+        android:text="Envoyer un message"
+        android:visibility="gone"
+        />
+
 
     <HorizontalScrollView
         android:id="@+id/interestSrollView"

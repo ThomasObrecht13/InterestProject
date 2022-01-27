@@ -94,9 +94,7 @@ public class MessageFragment extends Fragment  {
                 new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         User userSelected = userAdapterMessage.getItem(position);
-                        //Toast.makeText(getContext(), newUser.getUsername(),Toast.LENGTH_SHORT).show();
 
-                        ProfileFragment profileFragment = new ProfileFragment();
                         Intent intent = new Intent(getActivity(),ChatActivity.class);
                         intent.putExtra("userId",userSelected.getId());
                         startActivity(intent);

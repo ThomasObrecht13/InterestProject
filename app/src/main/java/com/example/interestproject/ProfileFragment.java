@@ -41,7 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
     //Element de la vue
     TextView teName, teEmail, tePrenom, teDescription;
-    Button logout, editProfile;
+    Button logout, editProfile ,openNewChatBtn;
     CircleImageView profilePicture;
     NavigationBarView navigationBarView;
     MenuItem more;
@@ -90,6 +90,7 @@ public class ProfileFragment extends Fragment {
         if(bundle != null){
             String id = (String) bundle.get("idUser");
             reference = FirebaseDatabase.getInstance().getReference("Users").child(id);
+
             backButton = getView().findViewById(R.id.back_button_profil);
             backButton.setVisibility(View.VISIBLE);
             backButton.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +102,17 @@ public class ProfileFragment extends Fragment {
                             .setReorderingAllowed(true)
                             .replace(R.id.nav_fragment, searchFragment)
                             .commit();
+                }
+            });
+
+            openNewChatBtn = getView().findViewById(R.id.open_new_chat_btn);
+            openNewChatBtn.setVisibility(View.VISIBLE);
+            openNewChatBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(),ChatActivity.class);
+                    intent.putExtra("userId",id);
+                    startActivity(intent);
                 }
             });
         }else {
