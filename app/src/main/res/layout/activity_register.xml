@@ -31,9 +31,26 @@
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:id="@+id/registerName"
+        android:id="@+id/registerUsername"
 
         app:layout_constraintTop_toBottomOf="@+id/inscriptionTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+
+        android:background="@drawable/rounded_white_input"
+
+        android:textAlignment="center"
+        android:textColor="@color/blueApp"
+        android:hint="Entrer votre pseudo"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/registerLastname"
+
+        app:layout_constraintTop_toBottomOf="@+id/registerUsername"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
@@ -48,9 +65,27 @@
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:id="@+id/registerFirstname"
+
+        app:layout_constraintTop_toBottomOf="@+id/registerLastname"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+
+        android:background="@drawable/rounded_white_input"
+
+        android:textAlignment="center"
+        android:textColor="@color/blueApp"
+        android:hint="Entrer votre prenom"
+        />
+
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:id="@+id/registerEmail"
 
-        app:layout_constraintTop_toBottomOf="@+id/registerName"
+        app:layout_constraintTop_toBottomOf="@+id/registerFirstname"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"

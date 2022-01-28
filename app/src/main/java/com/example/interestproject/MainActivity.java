@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void status(String status){
+        //Todo: fait planter quand on logout
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 

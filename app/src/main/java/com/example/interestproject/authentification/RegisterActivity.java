@@ -29,11 +29,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etRegEmail, etRegPassword, etRegName;
+    private EditText etRegEmail, etRegPassword, etRegLastname, etRegFirstName, etRegUsername;
     private TextView tvLoginHere;
     private Button btnRegister;
 
@@ -47,9 +48,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etRegName = findViewById(R.id.registerName);
+        etRegLastname = findViewById(R.id.registerLastname);
+        etRegFirstName = findViewById(R.id.registerFirstname);
+        etRegUsername = findViewById(R.id.registerUsername);
         etRegEmail = findViewById(R.id.registerEmail);
         etRegPassword = findViewById(R.id.registerPassword);
+
         tvLoginHere = findViewById(R.id.tvLoginHere);
         btnRegister = findViewById(R.id.registerButton);
 
@@ -58,14 +62,15 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(view ->{
             String email = etRegEmail.getText().toString();
             String password = etRegPassword.getText().toString();
-            String name = etRegName.getText().toString();
-            if(TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
-                Toast.makeText(RegisterActivity.this,"Entrer vos données",Toast.LENGTH_SHORT);
+            String username = etRegUsername.getText().toString();
 
+            if(TextUtils.isEmpty(username) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)
+                    || TextUtils.isEmpty(etRegLastname.getText().toString()) || TextUtils.isEmpty(etRegFirstName.getText().toString())){
+                Toast.makeText(RegisterActivity.this,"Entrer vos données",Toast.LENGTH_SHORT);
             }else if(password.length() < 6) {
                 Toast.makeText(RegisterActivity.this, "Mot de passe trop court", Toast.LENGTH_SHORT);
             }else{
-                register(name, email, password);
+                register(username, email, password);
             }
         });
 
@@ -91,8 +96,11 @@ public class RegisterActivity extends AppCompatActivity {
                     hashMap.put("id", userid);
                     hashMap.put("username", username);
                     hashMap.put("imageURL", "default");
-                    hashMap.put("prenom", null);
+                    hashMap.put("firstname", etRegFirstName.getText().toString());
+                    hashMap.put("lastname", etRegLastname.getText().toString());
                     hashMap.put("description", null);
+                    hashMap.put("search",username.toLowerCase());
+                    hashMap.put("status","offline");
 
                     reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -106,66 +114,10 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
                 }else {
-                    Toast.makeText(RegisterActivity.this,"You can't register",Toast.LENGTH_SHORT);
+                    Toast.makeText(RegisterActivity.this,"You can't register",Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
-
-    private void createUser(){
-        //Data from form
-        String email = etRegEmail.getText().toString();
-        String password = etRegPassword.getText().toString();
-        String name = etRegName.getText().toString();
-
-        //access to database
-        db = FirebaseFirestore.getInstance();
-
-        if (TextUtils.isEmpty(email)){
-            etRegEmail.setError("Email cannot be empty");
-            etRegEmail.requestFocus();
-        }else if (TextUtils.isEmpty(password)){
-            etRegPassword.setError("Password cannot be empty");
-            etRegPassword.requestFocus();
-        }else if (TextUtils.isEmpty(name)){
-            etRegName.setError("Name cannot be empty");
-            etRegName.requestFocus();
-        }else{
-            mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        //mFirebaseAnalytics.setUserProperty("name", "testNameAnalytics");
-
-                        FirebaseUser user = mAuth.getCurrentUser();
-
-                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(name)
-                                .setPhotoUri(Uri.parse("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"))
-                                .build();
-
-
-                        DocumentReference documentReference = db.collection("users").document(user.getUid());
-                        //Map<String,Object> user = new HashMap<>();
-
-                        user.updateProfile(profileUpdates)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.d("updateUser", "User profile updated.");
-                                        }
-                                    }
-                                });
-
-                        Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                    }else{
-                        Toast.makeText(RegisterActivity.this, "Registration Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
     }
 }
 

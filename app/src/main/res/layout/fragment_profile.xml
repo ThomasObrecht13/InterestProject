@@ -41,7 +41,7 @@
 
 
     <TextView
-        android:id="@+id/teName"
+        android:id="@+id/teUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -54,46 +54,30 @@
         android:textStyle="bold"
         android:textColor="@color/blueApp"
         android:textSize="16dp"
+        android:text="lipsum"
 
         />
-    <!--
         <TextView
-            android:id="@+id/tePrenom"
+            android:id="@+id/teFirstnameAndLastname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/teName"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profilePicture"
+            app:layout_constraintTop_toBottomOf="@+id/teUsername"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:textColor="@color/blueApp"
-            android:textSize="16dp"
+            android:textSize="14dp"
+            android:text="lipsum lipsum"
             />
-            -->
-
-    <TextView
-        android:id="@+id/teEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teName"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-
-        android:textStyle="italic"
-        android:textSize="15dp"
-        android:textColor="@color/blueApp"
-        />
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/scrollViewDescription"
-        app:layout_constraintTop_toBottomOf="@+id/teEmail"
+        app:layout_constraintTop_toBottomOf="@+id/teFirstnameAndLastname"
         app:layout_constraintBottom_toTopOf="@id/open_new_chat_btn"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"

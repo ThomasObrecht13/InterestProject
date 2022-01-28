@@ -24,7 +24,7 @@
 
 
     <SearchView
-        android:id="@+id/SearchBar"
+        android:id="@+id/search_user_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="15dp"
@@ -32,7 +32,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/messageTitle"
         android:layout_marginHorizontal="20dp"
-
+        android:queryHint="Rechercher un utilisateur"
         android:background="@drawable/rounded_white_input"
         />
 
@@ -40,7 +40,7 @@
         android:id="@+id/recycler_view_message_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/SearchBar"
+        app:layout_constraintTop_toBottomOf="@+id/search_user_message"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="15dp"
         />

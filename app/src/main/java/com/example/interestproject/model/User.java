@@ -10,17 +10,23 @@ public class User {
     private String username;
     private String imageURL;
     private String description;
-    private String prenom;
+    private String lastname;
+    private String firstname;
     private String status;
+    private String search;
 
-    public User(String id, String username, String prenom, String description, String imageURL, String status){
+    public User(String id, String username, String lastname, String firstname, String description, String imageURL, String status){
         this.id = id;
         this.username = username;
-        this.prenom = prenom;
+        this.lastname = lastname;
+        this.firstname = firstname;
         this.description = description;
         this.imageURL = imageURL;
         this.status = status;
+        this.search = username.toLowerCase();
     }
+
+
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -33,7 +39,10 @@ public class User {
         result.put("username", username);
         result.put("imageURL", imageURL);
         result.put("description", description);
-        result.put("prenom", prenom);
+        result.put("lastname", lastname);
+        result.put("firstname", firstname);
+        result.put("status", status);
+        result.put("search", search);
 
         return result;
     }
@@ -70,13 +79,6 @@ public class User {
         this.description = description;
     }
 
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
 
     public String getStatus() {
         return status;
@@ -86,4 +88,26 @@ public class User {
         this.status = status;
     }
 
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+    public String getSearch() {
+        return this.search;
+    }
 }

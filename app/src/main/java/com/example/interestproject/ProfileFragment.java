@@ -40,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     //Element de la vue
-    TextView teName, teEmail, tePrenom, teDescription;
+    TextView teUsername, teFistnameAndLastname, teDescription;
     Button logout, editProfile ,openNewChatBtn;
     CircleImageView profilePicture;
     NavigationBarView navigationBarView;
@@ -79,18 +79,19 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //Element de la vue
         profilePicture = (CircleImageView) getView().findViewById(R.id.profilePicture);
-        teName = (TextView) getView().findViewById(R.id.teName);
-        teEmail = (TextView) getView().findViewById(R.id.teEmail);
+        teUsername = (TextView) getView().findViewById(R.id.teUsername);
+        teFistnameAndLastname = (TextView) getView().findViewById(R.id.teFirstnameAndLastname);
         teDescription = (TextView) getView().findViewById(R.id.teDescription);
-        //tePrenom = (TextView) getView().findViewById(R.id.tePrenom);
 
 
 
+        //Si on regarde le profil d'un autre utilisateur
         Bundle bundle = this.getArguments();
         if(bundle != null){
             String id = (String) bundle.get("idUser");
             reference = FirebaseDatabase.getInstance().getReference("Users").child(id);
 
+            //setup back button
             backButton = getView().findViewById(R.id.back_button_profil);
             backButton.setVisibility(View.VISIBLE);
             backButton.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +106,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
+            //setup btn for new chat
             openNewChatBtn = getView().findViewById(R.id.open_new_chat_btn);
             openNewChatBtn.setVisibility(View.VISIBLE);
             openNewChatBtn.setOnClickListener(new View.OnClickListener() {
@@ -168,13 +170,15 @@ public class ProfileFragment extends Fragment {
 
                     User user = dataSnapshot.getValue(User.class);
                     if (user == null) {
-                        teName.setText("Veuillez modifier votre profile");
+                        teUsername.setText("Veuillez modifier votre profile");
                         return;
                     }
-                    String name = user.getUsername();
-                    if (user.getPrenom() != null)
-                        name += " " + user.getPrenom();
-                    teName.setText(name);
+
+                    teUsername.setText(user.getUsername());
+
+                    String firstnameAndLastName = user.getLastname();
+                    firstnameAndLastName += " "+user.getFirstname();
+                    teFistnameAndLastname.setText(firstnameAndLastName);
 
                     teDescription.setText(user.getDescription());
                     if (mActivity != null) {

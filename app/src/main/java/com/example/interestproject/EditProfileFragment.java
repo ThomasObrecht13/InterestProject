@@ -54,6 +54,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -62,7 +63,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class EditProfileFragment extends Fragment {
 
     private static final int PICK_IMAGE = 1;
-    EditText etName,etEmail,etPrenom,etDescription;
+    EditText etFirstname, etLastname, etUsername, etDescription;
     CircleImageView profilePicture;
     Button editProfile;
 
@@ -76,6 +77,7 @@ public class EditProfileFragment extends Fragment {
     Uri pictureSelected;
     User user;
 
+    //Todo:: L'app plante quand on change l'image
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +99,9 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //recupère les éléments de la vue
-        etName = (EditText) view.findViewById(R.id.etName);
-        //etEmail = (EditText) view.findViewById(R.id.etEmail);
-        etPrenom = (EditText) view.findViewById(R.id.etPrenom);
+        etUsername = (EditText) view.findViewById(R.id.etUsername);
+        etLastname = (EditText) view.findViewById(R.id.etLastname);
+        etFirstname = (EditText) view.findViewById(R.id.etFirstname);
         etDescription = (EditText) view.findViewById(R.id.etDescription);
         profilePicture = (CircleImageView) view.findViewById(R.id.profilePicture);
 
@@ -118,9 +120,10 @@ public class EditProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
 
-                etName.setText(user.getUsername());
+                etUsername.setText(user.getUsername());
 
-                etPrenom.setText(user.getPrenom());
+                etFirstname.setText(user.getFirstname());
+                etLastname.setText(user.getLastname());
 
                 etDescription.setText(user.getDescription());
 
@@ -153,9 +156,7 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //open imagePicker
-
                 getImg();
-
             }
         });
         //Edit default/custom data user
@@ -166,20 +167,23 @@ public class EditProfileFragment extends Fragment {
 
                 //Data from form
                 //String email = etEmail.getText().toString();
-                String name = etName.getText().toString();
-                String prenom = etPrenom.getText().toString();
+                String username = etUsername.getText().toString();
+                String firstname = etFirstname.getText().toString();
+                String lastname = etLastname.getText().toString();
                 String description = etDescription.getText().toString();
 
-                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(prenom) || TextUtils.isEmpty(description)) {
-                    etName.setError("Remplie !");
+                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(firstname) || TextUtils.isEmpty(lastname) || TextUtils.isEmpty(description)) {
+                    etUsername.setError("Remplie !");
                 }else{
-                    user.setUsername(name);
-                    user.setPrenom(prenom);
+                    user.setUsername(username);
+                    user.setFirstname(firstname);
+                    user.setLastname(lastname);
                     user.setDescription(description);
+                    user.setSearch(username.toLowerCase());
                 }
 
                 /*
-                Pour que l'image soit modifier avant les retour a ProfileFragment
+                Pour que l'image soit modifier avant le retour a ProfileFragment
                 Sinon le changement ne se fait pas
                  */
                 if (pictureSelected != null) {
