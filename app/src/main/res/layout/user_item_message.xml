@@ -53,4 +53,20 @@
         android:visibility="gone"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/user_item_message_last_message"
+        android:layout_below="@+id/user_item_message_username"
+        android:layout_toRightOf="@id/user_item_message_profil_picture"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+
+        android:maxLines="1"
+        android:textColor="@color/black"
+
+        />
+
+
 </RelativeLayout>

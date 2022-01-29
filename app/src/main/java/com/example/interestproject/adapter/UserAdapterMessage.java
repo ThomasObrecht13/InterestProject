@@ -12,7 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.interestproject.R;
+import com.example.interestproject.model.Chat;
 import com.example.interestproject.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -23,11 +31,13 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
     private Context mContext;
     private List<User> mUsers;
     private boolean isChat;
+    String theLastMessage;
 
     public UserAdapterMessage(Context mContext, List<User> mUsers, boolean isChat){
         this.mContext = mContext;
         this.mUsers = mUsers;
         this.isChat = isChat;
+
     }
 
     @NonNull
@@ -50,6 +60,12 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
             Glide.with(mContext)
                     .load(user.getImageURL())
                     .into(holder.profilePictureMessage);
+        }
+
+        if(isChat){
+            lastMessage(user.getId(), holder.lastMessage);
+        }else{
+            holder.lastMessage.setVisibility(View.GONE);
         }
 
         if(isChat){
@@ -78,7 +94,7 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        public TextView username;
+        public TextView username, lastMessage;
         public CircleImageView profilePictureMessage;
         public CircleImageView img_on;
         public CircleImageView img_off;
@@ -87,6 +103,7 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
             super(itemView);
             username = itemView.findViewById(R.id.user_item_message_username);
             profilePictureMessage = itemView.findViewById(R.id.user_item_message_profil_picture);
+            lastMessage = itemView.findViewById(R.id.user_item_message_last_message);
 
             img_on = itemView.findViewById(R.id.online_circle);
             img_off = itemView.findViewById(R.id.offline_circle);
@@ -103,5 +120,38 @@ public class UserAdapterMessage extends RecyclerView.Adapter<UserAdapterMessage.
         public boolean onLongClick(View v) {
             return false;
         }
+    }
+
+    private void lastMessage(String userId, TextView lastMessage){
+        theLastMessage = "default";
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chat chat = snapshot.getValue(Chat.class);
+                    if(chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userId) ||
+                            chat.getReceiver().equals(userId) && chat.getSender().equals(firebaseUser.getUid())){
+                        theLastMessage = chat.getMessage();
+                    }
+                }
+                switch (theLastMessage){
+                    case  "default":
+                        lastMessage.setText("No Message");
+                        break;
+                    default:
+                        lastMessage.setText(theLastMessage);
+                        break;
+                }
+                theLastMessage = "default";
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
