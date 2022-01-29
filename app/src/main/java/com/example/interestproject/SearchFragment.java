@@ -111,6 +111,7 @@ public class SearchFragment extends Fragment {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         ArrayList<User> users = new ArrayList<>();
+        assert firebaseUser != null;
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -119,6 +120,7 @@ public class SearchFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
 
+                    assert user != null;
                     if(!user.getId().equals(firebaseUser.getUid())){
                         mUsers.add(user);
                     }

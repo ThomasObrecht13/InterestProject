@@ -69,7 +69,7 @@
             android:textStyle="normal"
             android:textColor="@color/blueApp"
             android:textSize="14dp"
-            android:text="lipsum lipsum"
+            android:text="Prenom Nom"
             />
 
 

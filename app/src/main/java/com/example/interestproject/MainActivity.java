@@ -36,21 +36,13 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setSelectedItemId(R.id.homeFragment);
         bottomNavigationView.setOnItemSelectedListener(navListener);
-        Intent intent = getIntent();
-        boolean isNew = intent.getBooleanExtra("isNew",false);
-        if(isNew) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.nav_fragment, profileFragment)
-                    .commit();
-        }else{
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.nav_fragment, homeFragment)
-                    .commit();
-        }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.nav_fragment, homeFragment)
+                .commit();
+
     }
 
     private NavigationBarView.OnItemSelectedListener navListener = new

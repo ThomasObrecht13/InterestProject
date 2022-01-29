@@ -122,6 +122,7 @@ public class EditProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
 
+                assert user != null;
                 etUsername.setText(user.getUsername());
 
                 etFirstname.setText(user.getFirstname());

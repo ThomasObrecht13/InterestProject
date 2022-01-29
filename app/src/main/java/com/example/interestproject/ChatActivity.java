@@ -52,6 +52,8 @@ public class ChatActivity extends AppCompatActivity {
     ChatAdapter chatAdapter;
     List<Chat> mChat;
     RecyclerView recyclerView;
+    DatabaseReference chatRef1;
+    DatabaseReference chatRef2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,15 +149,16 @@ public class ChatActivity extends AppCompatActivity {
         hashMap.put("message",message);
 
         reference.child("Chats").push().setValue(hashMap);
-        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("ChatList")
-                .child(firebaseUser.getUid())
-                .child(userId);
 
-        chatRef.addValueEventListener(new ValueEventListener() {
+        chatRef1 = FirebaseDatabase.getInstance().getReference("ChatList")
+                .child(userId)
+                .child(firebaseUser.getUid());
+
+        chatRef1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
-                    chatRef.child("id").setValue(userId);
+                    chatRef1.child("id").setValue(firebaseUser.getUid());
                 }
             }
 
@@ -164,6 +167,28 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+        chatRef2 = FirebaseDatabase.getInstance().getReference("ChatList")
+                .child(firebaseUser.getUid())
+                .child(userId);
+
+
+        chatRef2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    chatRef2.child("id").setValue(userId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 
     private void readMessage(String myid, String userid, String imageURL){

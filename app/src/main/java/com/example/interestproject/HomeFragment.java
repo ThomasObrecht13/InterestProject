@@ -65,6 +65,7 @@ public class HomeFragment extends Fragment {
         userList = new ArrayList<>();
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert firebaseUser != null;
 
         reference = FirebaseDatabase.getInstance().getReference("ChatList").child(firebaseUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
@@ -112,6 +113,7 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
                     for(Chatlist chatlist : userList){
+                        assert user != null;
                         if(user.getId().equals(chatlist.getId())){
                             mUsers.add(user);
                         }
