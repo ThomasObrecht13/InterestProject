@@ -64,13 +64,14 @@ public class EditProfileFragment extends Fragment {
 
     private static final int PICK_IMAGE = 1;
     EditText etFirstname, etLastname, etUsername, etDescription;
-    CircleImageView profilePicture;
+    CircleImageView profilePicture,test;
     Button editProfile;
 
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     FirebaseUser userAuth;
     DatabaseReference reference;
+    Bitmap bitmap;
 
     private Activity mActivity;
 
@@ -104,6 +105,7 @@ public class EditProfileFragment extends Fragment {
         etFirstname = (EditText) view.findViewById(R.id.etFirstname);
         etDescription = (EditText) view.findViewById(R.id.etDescription);
         profilePicture = (CircleImageView) view.findViewById(R.id.profilePicture);
+        test = (CircleImageView) view.findViewById(R.id.testprofilePicture);
 
         db = FirebaseFirestore.getInstance();
 
@@ -127,11 +129,15 @@ public class EditProfileFragment extends Fragment {
 
                 etDescription.setText(user.getDescription());
 
-                if (mActivity != null) { //evite les crash
+                if(mActivity != null) { //évite un crash
                     if (user.getImageURL().equals("default")) {
 
                         Glide.with(getContext())
                                 .load("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg")
+                                .into(profilePicture);
+                    } else if (bitmap != null) {
+                        Glide.with(getContext())
+                                .load(bitmap)
                                 .into(profilePicture);
                     } else {
                         Glide.with(getContext())
@@ -140,6 +146,7 @@ public class EditProfileFragment extends Fragment {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -159,6 +166,7 @@ public class EditProfileFragment extends Fragment {
                 getImg();
             }
         });
+
         //Edit default/custom data user
         editProfile = (Button) view.findViewById(R.id.editProfile);
         editProfile.setOnClickListener(new View.OnClickListener() {
@@ -191,6 +199,7 @@ public class EditProfileFragment extends Fragment {
                     try {
                         bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(Objects.requireNonNull(pictureSelected)));
                         putFile(bitmap);
+
                         Log.i("ProfilePicturePickUp", "GET FROM LOCAL.: OK");
                     } catch (FileNotFoundException e) {
                         // TODO Auto-generated catch block
@@ -231,15 +240,19 @@ public class EditProfileFragment extends Fragment {
             if (requestCode == PICK_IMAGE) {
                 //après selection image
                 pictureSelected = data.getData();
-                Bitmap bitmap;
                 try {
                     bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(Objects.requireNonNull(pictureSelected)));
+
+                    Glide.with(getContext())
+                            .load(bitmap)
+                            .into(profilePicture);
+
                     profilePicture.setImageBitmap(bitmap);
+
                     Log.i("ProfilePicturePickUp", "GET FROM LOCAL.: OK");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     Log.i("ProfilePicturePickUp", "GET FROM LOCAL.: RUIM");
-
                 }
             }
         }
