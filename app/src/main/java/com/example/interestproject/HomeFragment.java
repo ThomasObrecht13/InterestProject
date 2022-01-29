@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.interestproject.adapter.UserAdapterMessage;
 import com.example.interestproject.adapter.UserAdapterSearch;
 import com.example.interestproject.model.Chat;
+import com.example.interestproject.model.Chatlist;
 import com.example.interestproject.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,7 +40,7 @@ public class HomeFragment extends Fragment {
     private UserAdapterSearch userAdapterSearch;
 
     private List<User> mUsers;
-    private List<String> userList;
+    private List<Chatlist> userList;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -65,24 +66,18 @@ public class HomeFragment extends Fragment {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference = FirebaseDatabase.getInstance().getReference("ChatList").child(firebaseUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Chat chat = snapshot.getValue(Chat.class);
-
-                    if(chat.getSender().equals(firebaseUser.getUid())){
-                        userList.add(chat.getReceiver());
-                    }
-                    if( chat.getReceiver().equals((firebaseUser.getUid()))){
-                        userList.add(chat.getSender());
-                    }
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chatlist chatlist = snapshot.getValue(Chatlist.class);
+                    userList.add(chatlist);
                 }
-                readUser();
-
+                chatList();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -107,29 +102,21 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-
-    private void readUser(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-
+    //Read user and keep user from userList
+    private void chatList() {
+        reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-
-                    if(!user.getId().equals(firebaseUser.getUid())){
-                        for(String id : userList){
-                            if(user.getId().equals(id)) {
-                                if(!mUsers.contains(user)){
-                                    mUsers.add(user);
-                                }
-                            }
+                    for(Chatlist chatlist : userList){
+                        if(user.getId().equals(chatlist.getId())){
+                            mUsers.add(user);
                         }
                     }
                 }
-
                 userAdapterSearch = new UserAdapterSearch(getContext(), mUsers,true);
                 recyclerView.setAdapter(userAdapterSearch);
             }
@@ -140,5 +127,4 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
 }

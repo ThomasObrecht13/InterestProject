@@ -40,12 +40,14 @@ public class ChatActivity extends AppCompatActivity {
     TextView username;
     CircleImageView profilPicture;
     Button backButton;
+
     DatabaseReference reference;
     FirebaseUser firebaseUser;
 
     ImageButton btnToSend;
     EditText messageToSend;
 
+    String userId;
 
     ChatAdapter chatAdapter;
     List<Chat> mChat;
@@ -83,7 +85,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //recupère les infos de l'utilisateur
         Intent intent = getIntent();
-        String userId = intent.getStringExtra("userId");
+        userId = intent.getStringExtra("userId");
 
 
         profilPicture.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +147,23 @@ public class ChatActivity extends AppCompatActivity {
         hashMap.put("message",message);
 
         reference.child("Chats").push().setValue(hashMap);
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("ChatList")
+                .child(firebaseUser.getUid())
+                .child(userId);
 
+        chatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    chatRef.child("id").setValue(userId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void readMessage(String myid, String userid, String imageURL){

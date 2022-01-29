@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.interestproject.adapter.UserAdapterMessage;
 import com.example.interestproject.model.Chat;
+import com.example.interestproject.model.Chatlist;
 import com.example.interestproject.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,14 +46,14 @@ public class MessageFragment extends Fragment  {
 
     private SearchView searchUserMessage;
 
-    private List<String> userList;
+    private List<Chatlist> userList;
+
     private FirebaseUser firebaseUser;
     private DatabaseReference reference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -85,6 +86,24 @@ public class MessageFragment extends Fragment  {
         mUsers = new ArrayList<>();
         userList = new ArrayList<>();
 
+        reference = FirebaseDatabase.getInstance().getReference("ChatList").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chatlist chatlist = snapshot.getValue(Chatlist.class);
+                    userList.add(chatlist);
+                }
+                chatList();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        /*
         //Get user which chat with you
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
@@ -110,7 +129,7 @@ public class MessageFragment extends Fragment  {
             }
         });
 
-
+*/
         //set OnclickListener to open ChatActivity
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -130,33 +149,58 @@ public class MessageFragment extends Fragment  {
 
         return view;
     }
+    //Read user and keep user from userList
+    private void chatList() {
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUsers.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    for(Chatlist chatlist : userList){
+                        if(user.getId().equals(chatlist.getId())){
+                            mUsers.add(user);
+                        }
+                    }
+                }
+                userAdapterMessage = new UserAdapterMessage(getContext(), mUsers,true);
+                recyclerView.setAdapter(userAdapterMessage);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void searchUser(String s) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("search")
                 .startAt(s)
-                .endAt(s+"\uf8ff");
+                .endAt(s + "\uf8ff");
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-
                     assert user != null;
                     assert firebaseUser != null;
-                    if(!user.getId().equals(firebaseUser.getUid())){
-                        for (String id : userList) {
-                            if (user.getId().equals(id)) {
-                                if (!mUsers.contains(user)) {
+                    Log.i("user in search", String.valueOf(user.getUsername()));
+
+                    if (!user.getId().equals(firebaseUser.getUid())) {
+                        for (Chatlist chatlist : userList) {
+                            if (user.getId().equals(chatlist.getId())) {
                                     mUsers.add(user);
-                                }
                             }
                         }
                     }
                 }
-                userAdapterMessage = new UserAdapterMessage(getContext(),mUsers,true);
+                userAdapterMessage = new UserAdapterMessage(getContext(), mUsers, true);
+                recyclerView.setAdapter(userAdapterMessage);
             }
 
             @Override
@@ -165,42 +209,6 @@ public class MessageFragment extends Fragment  {
             }
         });
 
-    }
-
-    //Read user and keep user from userList
-    private void readUser(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (searchUserMessage.getQuery().toString().equals("")) {
-                    mUsers.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        User user = snapshot.getValue(User.class);
-
-                        if (!user.getId().equals(firebaseUser.getUid())) {
-                            for (String id : userList) {
-                                if (user.getId().equals(id)) {
-                                    if (!mUsers.contains(user)) {
-                                        mUsers.add(user);
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    userAdapterMessage = new UserAdapterMessage(getContext(), mUsers, true);
-                    recyclerView.setAdapter(userAdapterMessage);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
 }
