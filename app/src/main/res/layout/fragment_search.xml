@@ -11,12 +11,13 @@
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/SearchBar"
+        android:id="@+id/search_user_bar"
         
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="5dp"
-        
+        android:queryHint="Rechercher un utilisateur"
+
         android:background="@drawable/rounded_white_input"
 
         />
@@ -29,7 +30,7 @@
 
         android:background="@drawable/separator_bar"
 
-        app:layout_constraintTop_toBottomOf="@+id/SearchBar"
+        app:layout_constraintTop_toBottomOf="@+id/search_user_bar"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"

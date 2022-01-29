@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.interestproject.adapter.UserAdapterMessage;
 import com.example.interestproject.adapter.UserAdapterSearch;
+import com.example.interestproject.model.Chatlist;
 import com.example.interestproject.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -36,24 +40,15 @@ public class SearchFragment extends Fragment {
     private UserAdapterSearch userAdapterSearch;
     private List<User> mUsers;
 
+    private SearchView searchUser;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-/*
-        mUsers = new ArrayList<>();
-        readUser();
-        Log.i("user", String.valueOf(mUsers));
-
-        simpleGrid = (GridView) view.findViewById(R.id.GridFilterSearch); // init GridView*/
-        //GridFilterSearchAdapter myAdapter=new GridFilterSearchAdapter(getContext(),R.layout.grid_view_items_filter_search,mUsers);
-       //simpleGrid.setAdapter(myAdapter);
-
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -93,7 +88,21 @@ public class SearchFragment extends Fragment {
                         // do whatever
                     }
                 })
-        );        Log.i("username : ", String.valueOf(mUsers));
+        );
+
+        searchUser = view.findViewById(R.id.search_user_bar);
+        searchUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                searchUser(s);
+                return false;
+            }
+        });
 
         return view;
     }
@@ -124,6 +133,37 @@ public class SearchFragment extends Fragment {
                 Log.i("onCancelled","oups");
             }
         });
+    }
+
+    private void searchUser(String s) {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("search")
+                .startAt(s)
+                .endAt(s + "\uf8ff");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUsers.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    assert user != null;
+                    assert firebaseUser != null;
+
+                    if (!user.getId().equals(firebaseUser.getUid())) {
+                        mUsers.add(user);
+                    }
+                }
+                userAdapterSearch = new UserAdapterSearch(getContext(), mUsers, true);
+                recyclerView.setAdapter(userAdapterSearch);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
 
