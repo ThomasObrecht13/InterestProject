@@ -50,7 +50,6 @@ public class ProfileFragment extends Fragment {
     private Activity mActivity;
 
     //Autre
-    EditProfileFragment editProfileFragment;
     FirebaseUser user;
     FirebaseAuth mAuth;
 
@@ -133,13 +132,20 @@ public class ProfileFragment extends Fragment {
                 public boolean onMenuItemClick(MenuItem item) {
                     //Modification profile
                     if (item.getItemId() == R.id.edit_profile_btn) {
-
-
-                        editProfileFragment = new EditProfileFragment();
+                        EditProfileFragment editProfileFragment = new EditProfileFragment();
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
                                 .setReorderingAllowed(true)
                                 .replace(R.id.nav_fragment, editProfileFragment)
+                                .commit();
+                    }
+                    //Modification profile
+                    if (item.getItemId() == R.id.manage_interest) {
+                        ManageInterestFragment manageInterestFragment = new ManageInterestFragment();
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .setReorderingAllowed(true)
+                                .replace(R.id.nav_fragment, manageInterestFragment)
                                 .commit();
                     }
                     //Logout
@@ -148,7 +154,7 @@ public class ProfileFragment extends Fragment {
                         FirebaseAuth.getInstance().signOut();
                         startActivity(intent);
                     }
-                    //Logout
+                    //forgotPassword
                     if (item.getItemId() == R.id.forgotPasswordBtn) {
                         Intent ForgotPasswordActivity = new Intent(getContext(), com.example.interestproject.authentification.ForgotPasswordActivity.class);
                         startActivity(ForgotPasswordActivity);

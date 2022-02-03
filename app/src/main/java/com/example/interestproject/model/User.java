@@ -14,8 +14,9 @@ public class User {
     private String firstname;
     private String status;
     private String search;
+    private String interests;
 
-    public User(String id, String username, String lastname, String firstname, String description, String imageURL, String status){
+    public User(String id, String username, String lastname, String firstname, String description, String imageURL, String status, String interests){
         this.id = id;
         this.username = username;
         this.lastname = lastname;
@@ -24,8 +25,8 @@ public class User {
         this.imageURL = imageURL;
         this.status = status;
         this.search = username.toLowerCase();
+        this.interests = interests;
     }
-
 
 
     public User() {
@@ -43,6 +44,7 @@ public class User {
         result.put("firstname", firstname);
         result.put("status", status);
         result.put("search", search);
+        result.put("interests", interests);
 
         return result;
     }
@@ -110,4 +112,19 @@ public class User {
     public String getSearch() {
         return this.search;
     }
+
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
+
+    public String[] getInterestsTab() {
+        String[] res = interests.split(",");
+        return res;
+    }
+
 }

@@ -215,6 +215,8 @@ public class LoginActivity extends AppCompatActivity {
                                 hashMap.put("description", null);
                                 hashMap.put("search", Objects.requireNonNull(firebaseUser.getDisplayName()).toLowerCase());
                                 hashMap.put("status", "offline");
+                                hashMap.put("interests", null);
+
                                 reference.setValue(hashMap);
 
                                 updateUI(firebaseUser);

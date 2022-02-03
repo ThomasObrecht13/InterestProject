@@ -12,6 +12,11 @@
         app:showAsAction="never">
     </item>
 
+    <item android:id="@+id/manage_interest"
+        android:title="Gérer vos intêrets"
+        app:showAsAction="never">
+    </item>
+
     <item android:id="@+id/logout_btn"
         android:title="Déconnexion"
         app:showAsAction="never">

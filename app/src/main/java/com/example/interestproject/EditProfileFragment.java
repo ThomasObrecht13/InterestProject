@@ -203,7 +203,6 @@ public class EditProfileFragment extends Fragment {
 
                         Log.i("ProfilePicturePickUp", "GET FROM LOCAL.: OK");
                     } catch (FileNotFoundException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                         Log.i("ProfilePicturePickUp", "GET FROM LOCAL.: RUIM");
                     }

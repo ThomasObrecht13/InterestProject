@@ -101,6 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
                     hashMap.put("description", null);
                     hashMap.put("search",username.toLowerCase());
                     hashMap.put("status","offline");
+                    hashMap.put("interests",null);
 
                     reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
