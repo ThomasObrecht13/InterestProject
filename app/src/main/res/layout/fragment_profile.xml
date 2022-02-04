@@ -105,157 +105,18 @@
         app:layout_constraintTop_toBottomOf="@+id/scrollViewDescription"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/interestSrollView"
+        app:layout_constraintBottom_toTopOf="@+id/interestRecyclerView"
         android:text="Envoyer un message"
         android:visibility="gone"
         />
 
-
-    <HorizontalScrollView
-        android:id="@+id/interestSrollView"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/scrollViewDescription"
+        android:id="@+id/interestRecyclerView"
+        app:layout_constraintTop_toBottomOf="@id/open_new_chat_btn"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="5dp"
-        android:scrollbars="none"
-
-        >
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/linearLayout1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginHorizontal="5dp"
-
-                    android:backgroundTint="@color/orangeApp"
-
-                    android:textAlignment="center"
-                    android:text="Sport"
-                    android:textSize="10dp"
-                    android:textColor="@color/whiteApp"
-                    />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginHorizontal="5dp"
-
-                    android:backgroundTint="@color/orangeApp"
-                    android:textAlignment="center"
-                    android:text="Cinéma"
-                    android:textSize="10dp"
-                    android:textColor="@color/whiteApp"
-                    />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginHorizontal="5dp"
-                    android:backgroundTint="@color/orangeApp"
-                    android:textAlignment="center"
-                    android:text="jeux vidéo"
-                    android:textSize="10dp"
-                    android:textColor="@color/whiteApp"
-                    />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginHorizontal="5dp"
-                    android:backgroundTint="@color/orangeApp"
-                    android:textAlignment="center"
-                    android:text="musique"
-                    android:textSize="10dp"
-                    android:textColor="@color/whiteApp"
-                    />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
-                android:layout_marginTop="5dp"
-                >
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginHorizontal="5dp"
-                    android:backgroundTint="@color/orangeApp"
-
-                    android:textAlignment="center"
-                    android:text="esport"
-                    android:textSize="10dp"
-                    android:textColor="@color/whiteApp"
-                    />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginHorizontal="5dp"
-
-                    android:backgroundTint="@color/orangeApp"
-                    android:textAlignment="center"
-                    android:text="Archéoligie"
-                    android:textSize="10dp"
-                    android:textColor="@color/whiteApp"
-                    />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginHorizontal="5dp"
-                    android:backgroundTint="@color/orangeApp"
-                    android:textAlignment="center"
-                    android:text="Dessin"
-                    android:textSize="10dp"
-                    android:textColor="@color/whiteApp"
-                    />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginHorizontal="5dp"
-                    android:backgroundTint="@color/orangeApp"
-                    android:textAlignment="center"
-                    android:text="Peinture"
-                    android:textSize="10dp"
-                    android:textColor="@color/whiteApp"
-                    />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginHorizontal="5dp"
-                    android:backgroundTint="@color/orangeApp"
-                    android:textAlignment="center"
-                    android:text="Mode"
-                    android:textSize="10dp"
-                    android:textColor="@color/whiteApp"
-                    />
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </HorizontalScrollView>
-
+        android:layout_marginBottom="60dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -84,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.i("test","test");
                 if(task.isSuccessful()) {
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
                     assert firebaseUser != null;
@@ -98,10 +99,10 @@ public class RegisterActivity extends AppCompatActivity {
                     hashMap.put("imageURL", "default");
                     hashMap.put("firstname", etRegFirstName.getText().toString());
                     hashMap.put("lastname", etRegLastname.getText().toString());
-                    hashMap.put("description", null);
-                    hashMap.put("search",username.toLowerCase());
-                    hashMap.put("status","offline");
-                    hashMap.put("interests",null);
+                    hashMap.put("description", "");
+                    hashMap.put("search", username.toLowerCase());
+                    hashMap.put("status", "offline");
+                    hashMap.put("interests", "");
 
                     reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

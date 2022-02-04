@@ -2,7 +2,10 @@ package com.example.interestproject.model;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
@@ -122,9 +125,9 @@ public class User {
         this.interests = interests;
     }
 
-    public String[] getInterestsTab() {
-        String[] res = interests.split(",");
-        return res;
+    public List<String> getInterestsList() {
+        String[] interests = this.interests.split(",");
+        return new ArrayList<String>(Arrays.asList(interests));
     }
 
 }

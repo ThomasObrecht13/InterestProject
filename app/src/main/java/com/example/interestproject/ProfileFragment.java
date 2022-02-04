@@ -18,10 +18,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.interestproject.adapter.InterestAdapter;
+import com.example.interestproject.adapter.UserAdapterMessage;
 import com.example.interestproject.authentification.LoginActivity;
 import com.example.interestproject.authentification.RegisterActivity;
+import com.example.interestproject.model.Chatlist;
 import com.example.interestproject.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,22 +40,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileFragment extends Fragment {
     //Element de la vue
     TextView teUsername, teFistnameAndLastname, teDescription;
-    Button logout, editProfile ,openNewChatBtn;
+    Button openNewChatBtn;
     CircleImageView profilePicture;
-    NavigationBarView navigationBarView;
-    MenuItem more;
+
+    RecyclerView interestRecyclerView;
+    List<String> mInterest;
 
     ImageButton backButton;
     private Activity mActivity;
 
     //Autre
-    FirebaseUser user;
+    FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
 
     DatabaseReference reference;
@@ -81,8 +90,6 @@ public class ProfileFragment extends Fragment {
         teUsername = (TextView) getView().findViewById(R.id.teUsername);
         teFistnameAndLastname = (TextView) getView().findViewById(R.id.teFirstnameAndLastname);
         teDescription = (TextView) getView().findViewById(R.id.teDescription);
-
-
 
         //Si on regarde le profil d'un autre utilisateur
         Bundle bundle = this.getArguments();
@@ -118,6 +125,11 @@ public class ProfileFragment extends Fragment {
             });
         }else {
             //Pour voir son profil
+
+            //recupère l'user dans la DB
+            mAuth = FirebaseAuth.getInstance();
+            firebaseUser = mAuth.getCurrentUser();
+            reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
             /*------------------
                 Redirection
@@ -163,50 +175,16 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-            //recupère l'user dans la DB
-            mAuth = FirebaseAuth.getInstance();
-            user = mAuth.getCurrentUser();
-            reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         }
+        getUserInfo();
 
-
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    User user = dataSnapshot.getValue(User.class);
-                    if (user == null) {
-                        teUsername.setText("Veuillez modifier votre profile");
-                        return;
-                    }
-
-                    teUsername.setText(user.getUsername());
-
-                    String firstnameAndLastName = user.getLastname();
-                    firstnameAndLastName += " "+user.getFirstname();
-                    teFistnameAndLastname.setText(firstnameAndLastName);
-
-                    teDescription.setText(user.getDescription());
-                    if (mActivity != null) {
-                        if (user.getImageURL().equals("default")) {
-
-                            Glide.with(getContext())
-                                    .load("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg")
-                                    .into(profilePicture);
-                        } else {
-                            Glide.with(getContext())
-                                    .load(user.getImageURL())
-                                    .into(profilePicture);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
+        interestRecyclerView = view.findViewById(R.id.interestRecyclerView);
+        interestRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        interestRecyclerView.setLayoutManager(linearLayoutManager);
+        mInterest = new ArrayList<String>();
+        getInterest();
 
         }
 
@@ -217,6 +195,68 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
 
+    }
+
+    private void getUserInfo() {
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                User user = dataSnapshot.getValue(User.class);
+                if (user == null) {
+                    teUsername.setText("Profil vide");
+                    return;
+                }
+
+                teUsername.setText(user.getUsername());
+
+                String firstnameAndLastName = user.getLastname();
+                firstnameAndLastName += " "+user.getFirstname();
+                teFistnameAndLastname.setText(firstnameAndLastName);
+
+                teDescription.setText(user.getDescription());
+                if (mActivity != null) {
+                    if (user.getImageURL().equals("default")) {
+
+                        Glide.with(getContext())
+                                .load("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg")
+                                .into(profilePicture);
+                    } else {
+                        Glide.with(getContext())
+                                .load(user.getImageURL())
+                                .into(profilePicture);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    //Read user and keep user from userList
+    private void getInterest() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mInterest.clear();
+                User user = dataSnapshot.getValue(User.class);
+                assert user != null;
+                if(!user.getInterests().equals("")) {
+                    mInterest = user.getInterestsList();
+
+                    InterestAdapter interestAdapter = new InterestAdapter(getContext(), mInterest);
+                    interestRecyclerView.setAdapter(interestAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }

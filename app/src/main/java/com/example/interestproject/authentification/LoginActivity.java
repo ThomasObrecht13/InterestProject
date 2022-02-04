@@ -212,10 +212,10 @@ public class LoginActivity extends AppCompatActivity {
                                 hashMap.put("imageURL", "default");
                                 hashMap.put("firstname", "defaultFirstname");
                                 hashMap.put("lastname", "defaultLastname");
-                                hashMap.put("description", null);
+                                hashMap.put("description", "");
                                 hashMap.put("search", Objects.requireNonNull(firebaseUser.getDisplayName()).toLowerCase());
                                 hashMap.put("status", "offline");
-                                hashMap.put("interests", null);
+                                hashMap.put("interests", "");
 
                                 reference.setValue(hashMap);
 

@@ -15,10 +15,11 @@
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/fragment_profile.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/fragment_search.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/grid_view_items_filter_search.xml" value="0.17831813576494426" />
-        <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/user_item_message.xml" value="0.67" />
+        <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/user_item_message.xml" value="0.276268115942029" />
         <entry key="..\:/Users/Thomas/Documents/cours/teprow/interestProject/app/src/main/res/layout/user_item_search.xml" value="0.3359375" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable-v24/rounded_blue_button.xml" value="0.1" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable-v24/separator_bar.xml" value="0.1" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable/background_interest.xml" value="0.2703125" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable/background_left_chat.xml" value="0.1" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable/background_right_chat.xml" value="0.1" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1574074074074074" />
@@ -33,12 +34,15 @@
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/chat_item_left.xml" value="0.2" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/chat_item_right.xml" value="0.1" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/connexion.xml" value="0.12360688956433637" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_add_interest.xml" value="0.4" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_edit_profile.xml" value="0.1625" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_home.xml" value="0.1859375" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_manage_interest.xml" value="0.24682971014492755" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_message.xml" value="0.13363533408833522" />
-        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_profile.xml" value="0.4" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_profile.xml" value="0.136" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/fragment_search.xml" value="0.225" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/inscripiton.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/interest_item.xml" value="0.24682971014492755" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/user_item_message.xml" value="1.0" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/layout/user_item_search.xml" value="1.6" />
         <entry key="..\:/Users/thoma/Documents/Cours/Android/interestProject/app/src/main/res/menu/bottom_nav_bar.xml" value="0.1537037037037037" />

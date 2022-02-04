@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ManageInterestFragment extends Fragment {
@@ -66,10 +67,8 @@ public class ManageInterestFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
                 assert user != null;
-                String[] interestsTab = user.getInterestsTab();
-                checkInterest(interestsTab);
-                //TODO:: préselectionner les interet
-
+                List<String> interestsList = user.getInterestsList();
+                checkInterest(interestsList);
             }
 
             @Override
@@ -88,15 +87,25 @@ public class ManageInterestFragment extends Fragment {
                     reference = FirebaseDatabase.getInstance().getReference("Users");
                     childUpdates.put("/"+firebaseUser.getUid()+"/", user.toMap());
                     reference.updateChildren(childUpdates);
+
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.nav_fragment, profileFragment)
+                            .commit();
+
+                }else {
+                    Toast.makeText(getContext(), "Selectionner des intérêts", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getContext(),"seokbjfd",Toast.LENGTH_SHORT).show();
             }
         });
 
 
+
     }
 
-    private void checkInterest(String[] interestsTab) {
+    private void checkInterest(List<String> interestsTab) {
         for (String interest:
              interestsTab) {
             switch (interest){
