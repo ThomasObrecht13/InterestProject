@@ -8,14 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.interestproject.adapter.InterestAdapter;
 import com.example.interestproject.adapter.UserAdapterMessage;
 import com.example.interestproject.adapter.UserAdapterSearch;
 import com.example.interestproject.model.Chatlist;
@@ -36,6 +39,11 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private RecyclerView recyclerView;
+
+    private RecyclerView interestRecyclerView;
+
+    private InterestAdapter interestAdapter;
+    List<String> mInterest;
 
     private UserAdapterSearch userAdapterSearch;
     private List<User> mUsers;
@@ -104,6 +112,27 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        interestRecyclerView = view.findViewById(R.id.interestRecyclerView);
+        interestRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        interestRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mInterest = new ArrayList<>();
+
+        getInterest();
+        interestRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), interestRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        String interest = interestAdapter.getItem(position);
+
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
         return view;
     }
 
@@ -165,6 +194,19 @@ public class SearchFragment extends Fragment {
 
             }
         });
+
+    }
+
+    private void getInterest() {
+        mInterest.clear();
+
+        mInterest.add("Musique");
+        mInterest.add("Art");
+        mInterest.add("Sport");
+        mInterest.add("Mode");
+
+        interestAdapter = new InterestAdapter(getContext(), mInterest,true);
+        interestRecyclerView.setAdapter(interestAdapter);
 
     }
 

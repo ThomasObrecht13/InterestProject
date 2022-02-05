@@ -236,7 +236,7 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
-    //Read user and keep user from userList
+
     private void getInterest() {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -247,7 +247,7 @@ public class ProfileFragment extends Fragment {
                 if(!user.getInterests().equals("")) {
                     mInterest = user.getInterestsList();
 
-                    InterestAdapter interestAdapter = new InterestAdapter(getContext(), mInterest);
+                    InterestAdapter interestAdapter = new InterestAdapter(getContext(), mInterest,false);
                     interestRecyclerView.setAdapter(interestAdapter);
                 }
             }

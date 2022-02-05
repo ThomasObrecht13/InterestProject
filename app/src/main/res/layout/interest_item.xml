@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginHorizontal="5dp">
+    android:id="@+id/linear_layout_interest"
+    android:layout_marginHorizontal="5dp"
+    android:background="@drawable/background_interest_selected"
+    android:padding="10dp"
+    >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/user_item_message_username"
-        android:background="@drawable/background_interest"
+        android:id="@+id/interest_value"
         android:layout_centerVertical="true"
         android:text="hello"
-        android:padding="10dp"
         android:textStyle="bold"
         android:textColor="@color/whiteApp"
         />
 
 
 
-</RelativeLayout>
+</LinearLayout>

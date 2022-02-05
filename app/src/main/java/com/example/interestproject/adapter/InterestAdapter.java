@@ -2,9 +2,11 @@ package com.example.interestproject.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,12 +19,13 @@ import java.util.List;
 public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<String> interestsList;
-    String interest;
+    private List<String> mInterest;
+    private boolean isClickable;
 
-    public InterestAdapter(Context mContext, List<String> interestsList){
+    public InterestAdapter(Context mContext, List<String> mInterest, boolean isClickable){
         this.mContext = mContext;
-        this.interestsList = interestsList;
+        this.mInterest = mInterest;
+        this.isClickable = isClickable;
 
     }
 
@@ -36,39 +39,64 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        interest = interestsList.get(position);
+        String interest = mInterest.get(position);
         holder.valueInterest.setText(interest);
     }
 
     public String getItem(int position) {
-        return interestsList.get(position);
+        return mInterest.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return interestsList.size();
+        return mInterest.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         public TextView valueInterest;
+        public LinearLayout linearLayout;
+        public boolean isSelected;
+
         public ViewHolder(View itemView){
             super(itemView);
-            valueInterest = itemView.findViewById(R.id.user_item_message_username);
+            valueInterest = itemView.findViewById(R.id.interest_value);
+            linearLayout = itemView.findViewById(R.id.linear_layout_interest);
+            isSelected = false;
+            if(isClickable) {
+                valueInterest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
+                        if(isSelected) {
+                            linearLayout.setBackgroundResource(R.drawable.background_interest_unselected);
+                            isSelected = false;
+                        }
+                        else {
+                            linearLayout.setBackgroundResource(R.drawable.background_interest_selected);
+                            isSelected = true;
+                        }
+                    }
+                });
+            }
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            //clickListener.onItemClick(getAdapterPosition(), v);
-
         }
 
         @Override
         public boolean onLongClick(View v) {
             return false;
         }
+
+        public LinearLayout getLinearLayout(){
+            return linearLayout;
+        }
     }
+
+
 
 }
