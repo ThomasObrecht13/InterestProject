@@ -43,7 +43,6 @@
             android:textAlignment="center"
             android:hint="Entrer votre identifiant"
             android:background="@drawable/rounded_white_input"
-            android:text="test@test.test"
 
             />
 
@@ -62,10 +61,8 @@
             android:textColor="@color/blueApp"
             android:hint="Entrer votre mot de passe"
             android:inputType="textPassword"
-            android:text="testtest"
-
-
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,6 +90,7 @@
             android:backgroundTint="@color/orangeApp"
             android:text="Connexion"
             />
+
         <TextView
             android:id="@+id/forgot_password"
             android:layout_width="wrap_content"

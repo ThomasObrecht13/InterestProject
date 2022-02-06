@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linear_layout_interest"
-    android:layout_marginHorizontal="5dp"
+    android:layout_marginHorizontal="10dp"
     android:background="@drawable/background_interest_selected"
     android:padding="10dp"
     >

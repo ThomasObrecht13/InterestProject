@@ -2,6 +2,7 @@ package com.example.interestproject.adapter;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,47 +54,38 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView valueInterest;
-        public LinearLayout linearLayout;
-        public boolean isSelected;
+        private TextView valueInterest;
+        private boolean isSelected;
+        private LinearLayout linearLayout;
 
         public ViewHolder(View itemView){
             super(itemView);
             valueInterest = itemView.findViewById(R.id.interest_value);
             linearLayout = itemView.findViewById(R.id.linear_layout_interest);
             isSelected = false;
+/*
             if(isClickable) {
                 valueInterest.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        isSelected = !isSelected;
                         if(isSelected) {
-                            linearLayout.setBackgroundResource(R.drawable.background_interest_unselected);
-                            isSelected = false;
+                            linearLayout.setBackgroundResource(R.drawable.background_interest_selected);
                         }
                         else {
-                            linearLayout.setBackgroundResource(R.drawable.background_interest_selected);
-                            isSelected = true;
+                            linearLayout.setBackgroundResource(R.drawable.background_interest_unselected);
                         }
                     }
                 });
-            }
+            }*/
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-        }
 
-        @Override
-        public boolean onLongClick(View v) {
-            return false;
-        }
-
-        public LinearLayout getLinearLayout(){
-            return linearLayout;
         }
     }
 

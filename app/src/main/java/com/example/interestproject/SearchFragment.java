@@ -44,6 +44,8 @@ public class SearchFragment extends Fragment {
 
     private InterestAdapter interestAdapter;
     List<String> mInterest;
+    List<String> interestFitler;
+    String interest;
 
     private UserAdapterSearch userAdapterSearch;
     private List<User> mUsers;
@@ -119,38 +121,45 @@ public class SearchFragment extends Fragment {
         interestRecyclerView.setLayoutManager(linearLayoutManager);
 
         mInterest = new ArrayList<>();
+        interestFitler = new ArrayList<>();
 
         getInterest();
         interestRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(), interestRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        String interest = interestAdapter.getItem(position);
-
+            new RecyclerItemClickListener(getContext(), interestRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                @Override public void onItemClick(View view, int position) {
+                    interest = interestAdapter.getItem(position);
+                    if(interestFitler.contains(interest)){
+                        interestFitler.remove(interest);
+                    }else{
+                        interestFitler.add(interest);
                     }
+                    searchUser(searchUser.getQuery().toString());
+                }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
+                @Override public void onLongItemClick(View view, int position) {
+                    // do whatever
+                }
+            })
         );
+
         return view;
-    }
+                }
 
-    private void readUser(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        ArrayList<User> users = new ArrayList<>();
-        assert firebaseUser != null;
+                private void readUser(){
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+                    ArrayList<User> users = new ArrayList<>();
+                    assert firebaseUser != null;
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUsers.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    User user = snapshot.getValue(User.class);
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            mUsers.clear();
+                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                User user = snapshot.getValue(User.class);
 
-                    assert user != null;
-                    if(!user.getId().equals(firebaseUser.getUid())){
+                                assert user != null;
+                                if(!user.getId().equals(firebaseUser.getUid())){
                         mUsers.add(user);
                     }
                 }
@@ -180,9 +189,22 @@ public class SearchFragment extends Fragment {
                     User user = snapshot.getValue(User.class);
                     assert user != null;
                     assert firebaseUser != null;
-
-                    if (!user.getId().equals(firebaseUser.getUid())) {
-                        mUsers.add(user);
+                    if(!interestFitler.isEmpty()) {
+                        List<String> interestUser = new ArrayList<>(user.getInterestsList());
+                        if(!interestUser.isEmpty()) {
+                            for (String interest : interestUser) {
+                                if(interestFitler.contains(interest)){
+                                    if (!user.getId().equals(firebaseUser.getUid())) {
+                                        if(!mUsers.contains(user))
+                                            mUsers.add(user);
+                                    }
+                                }
+                            }
+                        }
+                    }else{
+                        if (!user.getId().equals(firebaseUser.getUid())) {
+                            mUsers.add(user);
+                        }
                     }
                 }
                 userAdapterSearch = new UserAdapterSearch(getContext(), mUsers, true);
