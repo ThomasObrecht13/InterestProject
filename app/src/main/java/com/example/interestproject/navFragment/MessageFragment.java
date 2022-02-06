@@ -97,33 +97,7 @@ public class MessageFragment extends Fragment  {
 
             }
         });
-        /*
-        //Get user which chat with you
-        reference = FirebaseDatabase.getInstance().getReference("Chats");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Chat chat = snapshot.getValue(Chat.class);
 
-                    if(chat.getSender().equals(firebaseUser.getUid())){
-                        userList.add(chat.getReceiver());
-                    }
-                    if( chat.getReceiver().equals((firebaseUser.getUid()))){
-                        userList.add(chat.getSender());
-                    }
-                }
-                readUser();
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-*/
         //set OnclickListener to open ChatActivity
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {

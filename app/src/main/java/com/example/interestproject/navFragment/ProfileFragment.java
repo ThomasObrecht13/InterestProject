@@ -55,7 +55,6 @@ public class ProfileFragment extends Fragment {
 
     //Autre
     FirebaseUser firebaseUser;
-    FirebaseAuth mAuth;
 
     DatabaseReference reference;
 
@@ -122,8 +121,9 @@ public class ProfileFragment extends Fragment {
             //Pour voir son profil
 
             //recupère l'user dans la DB
-            mAuth = FirebaseAuth.getInstance();
-            firebaseUser = mAuth.getCurrentUser();
+
+
+            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
             /*------------------

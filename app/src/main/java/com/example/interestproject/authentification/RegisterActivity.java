@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.interestproject.MainActivity;
 import com.example.interestproject.R;
+import com.example.interestproject.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -75,7 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.i("test","test");
                 if(task.isSuccessful()) {
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
                     assert firebaseUser != null;
@@ -83,17 +83,18 @@ public class RegisterActivity extends AppCompatActivity {
 
                     reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-                    HashMap<String, String> hashMap = new HashMap<>();
+                    User user = new User(
+                            userid,
+                            username,
+                            etRegLastname.getText().toString(),
+                            etRegFirstName.getText().toString(),
+                            "",
+                            "default",
+                            "offline",
+                            "");
 
-                    hashMap.put("id", userid);
-                    hashMap.put("username", username);
-                    hashMap.put("imageURL", "default");
-                    hashMap.put("firstname", etRegFirstName.getText().toString());
-                    hashMap.put("lastname", etRegLastname.getText().toString());
-                    hashMap.put("description", "");
-                    hashMap.put("search", username.toLowerCase());
-                    hashMap.put("status", "offline");
-                    hashMap.put("interests", "");
+                    HashMap<String, String> hashMap = user.toMap();
+
 
                     reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

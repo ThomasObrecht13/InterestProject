@@ -203,24 +203,23 @@ public class LoginActivity extends AppCompatActivity {
                     reference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            User user = dataSnapshot.getValue(User.class);
-                            if (user == null) {
-                                HashMap<String, String> hashMap = new HashMap<>();
 
-                                hashMap.put("id", firebaseUser.getUid());
-                                hashMap.put("username", firebaseUser.getDisplayName());
-                                hashMap.put("imageURL", "default");
-                                hashMap.put("firstname", "defaultFirstname");
-                                hashMap.put("lastname", "defaultLastname");
-                                hashMap.put("description", "");
-                                hashMap.put("search", Objects.requireNonNull(firebaseUser.getDisplayName()).toLowerCase());
-                                hashMap.put("status", "offline");
-                                hashMap.put("interests", "");
+                            User user = new User(
+                                    firebaseUser.getUid(),
+                                    firebaseUser.getDisplayName(),
+                                    "defaultLastname",
+                                    "defaultLastname",
+                                    "",
+                                    "default",
+                                    "offline",
+                                    "");
 
-                                reference.setValue(hashMap);
+                            HashMap<String, String> hashMap = user.toMap();
 
-                                updateUI(firebaseUser);
-                            }
+                            reference.setValue(hashMap);
+
+                            updateUI(firebaseUser);
+
                         }
 
                         @Override

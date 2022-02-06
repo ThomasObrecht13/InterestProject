@@ -141,8 +141,11 @@ public class SearchFragment extends Fragment {
                 }
 
                 private void readUser(){
+
                     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
                     ArrayList<User> users = new ArrayList<>();
                     assert firebaseUser != null;
 
