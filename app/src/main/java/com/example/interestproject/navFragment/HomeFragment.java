@@ -1,23 +1,20 @@
-package com.example.interestproject;
+package com.example.interestproject.navFragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.interestproject.adapter.UserAdapterMessage;
+import com.example.interestproject.ChatActivity;
+import com.example.interestproject.R;
+import com.example.interestproject.RecyclerItemClickListener;
 import com.example.interestproject.adapter.UserAdapterSearch;
-import com.example.interestproject.model.Chat;
 import com.example.interestproject.model.Chatlist;
 import com.example.interestproject.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,8 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class HomeFragment extends Fragment {
@@ -90,7 +85,7 @@ public class HomeFragment extends Fragment {
                     @Override public void onItemClick(View view, int position) {
                         User userSelected = userAdapterSearch.getItem(position);
 
-                        Intent intent = new Intent(getActivity(),ChatActivity.class);
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
                         intent.putExtra("userId",userSelected.getId());
                         startActivity(intent);
                     }

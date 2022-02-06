@@ -1,10 +1,9 @@
-package com.example.interestproject;
+package com.example.interestproject.navFragment;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,15 +20,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.interestproject.ChatActivity;
+import com.example.interestproject.editUserProfilFragment.EditProfileFragment;
+import com.example.interestproject.editUserProfilFragment.ManageInterestFragment;
+import com.example.interestproject.R;
 import com.example.interestproject.adapter.InterestAdapter;
-import com.example.interestproject.adapter.UserAdapterMessage;
 import com.example.interestproject.authentification.LoginActivity;
-import com.example.interestproject.authentification.RegisterActivity;
-import com.example.interestproject.model.Chatlist;
 import com.example.interestproject.model.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +34,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +113,7 @@ public class ProfileFragment extends Fragment {
             openNewChatBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(),ChatActivity.class);
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
                     intent.putExtra("userId",id);
                     startActivity(intent);
                 }

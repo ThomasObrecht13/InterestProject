@@ -1,4 +1,4 @@
-package com.example.interestproject;
+package com.example.interestproject.editUserProfilFragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -23,38 +22,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.interestproject.R;
 import com.example.interestproject.model.User;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.interestproject.navFragment.ProfileFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -67,7 +55,6 @@ public class EditProfileFragment extends Fragment {
     CircleImageView profilePicture,test;
     Button editProfile;
 
-    FirebaseFirestore db;
     FirebaseAuth mAuth;
     FirebaseUser userAuth;
     DatabaseReference reference;
@@ -107,7 +94,6 @@ public class EditProfileFragment extends Fragment {
         profilePicture = (CircleImageView) view.findViewById(R.id.profilePicture);
         test = (CircleImageView) view.findViewById(R.id.testprofilePicture);
 
-        db = FirebaseFirestore.getInstance();
 
         /*-----------------------------------------------------------------
             Remplie les éléments de la vue avec les data de currentUser

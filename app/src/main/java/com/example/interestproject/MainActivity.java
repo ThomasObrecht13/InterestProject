@@ -3,14 +3,14 @@ package com.example.interestproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 
+import com.example.interestproject.navFragment.HomeFragment;
+import com.example.interestproject.navFragment.MessageFragment;
+import com.example.interestproject.navFragment.ProfileFragment;
+import com.example.interestproject.navFragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
