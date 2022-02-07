@@ -128,7 +128,9 @@ public class MessageFragment extends Fragment  {
                     User user = snapshot.getValue(User.class);
                     for(Chatlist chatlist : userList){
                         if(user.getId().equals(chatlist.getId())){
-                            mUsers.add(user);
+                            if(!mUsers.contains(user)){
+                                mUsers.add(user);
+                            }
                         }
                     }
                 }
@@ -162,7 +164,9 @@ public class MessageFragment extends Fragment  {
                     if (!user.getId().equals(firebaseUser.getUid())) {
                         for (Chatlist chatlist : userList) {
                             if (user.getId().equals(chatlist.getId())) {
+                                if(!mUsers.contains(user)){
                                     mUsers.add(user);
+                                }
                             }
                         }
                     }

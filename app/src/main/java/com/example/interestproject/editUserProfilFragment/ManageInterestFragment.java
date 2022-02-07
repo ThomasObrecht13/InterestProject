@@ -109,15 +109,14 @@ public class ManageInterestFragment extends Fragment {
     private void checkInterest(List<String> interestsTab) {
         for (String interest:
              interestsTab) {
-            switch (interest){
-                case "Mode":
-                    checkBoxMode.setChecked(true);
-                case "Musique":
-                    checkBoxMusique.setChecked(true);
-                case "Sport":
-                    checkBoxSport.setChecked(true);
-                case "Art":
-                    checkBoxArt.setChecked(true);
+            if(interest.equals("Mode")){
+                checkBoxMode.setChecked(true);
+            }else if(interest.equals("Musique")){
+                checkBoxMusique.setChecked(true);
+            }else if(interest.equals("Sport")){
+                checkBoxSport.setChecked(true);
+            }else if(interest.equals("Art")){
+                checkBoxArt.setChecked(true);
             }
         }
     }

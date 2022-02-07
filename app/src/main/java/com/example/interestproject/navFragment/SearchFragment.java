@@ -205,7 +205,7 @@ public class SearchFragment extends Fragment {
                         }
                     }
                 }
-                userAdapterSearch = new UserAdapterSearch(getContext(), mUsers, true);
+                userAdapterSearch = new UserAdapterSearch(getContext(), mUsers, false);
                 recyclerView.setAdapter(userAdapterSearch);
             }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,6 +35,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private UserAdapterSearch userAdapterSearch;
 
+    TextView none_user_connected;
     private List<User> mUsers;
     private List<Chatlist> userList;
 
@@ -55,6 +57,8 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layout = new LinearLayoutManager(getContext()) ;
         layout.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layout);
+
+        none_user_connected = view.findViewById(R.id.none_user_connected);
 
         mUsers = new ArrayList<>();
         userList = new ArrayList<>();
@@ -110,9 +114,16 @@ public class HomeFragment extends Fragment {
                     for(Chatlist chatlist : userList){
                         assert user != null;
                         if(user.getId().equals(chatlist.getId())){
-                            mUsers.add(user);
+                            if(user.getStatus().equals("online")) {
+                                mUsers.add(user);
+                            }
                         }
                     }
+                }
+                if(mUsers.isEmpty()){
+                    none_user_connected.setVisibility(View.VISIBLE);
+                }else{
+                    none_user_connected.setVisibility(View.GONE);
                 }
                 userAdapterSearch = new UserAdapterSearch(getContext(), mUsers,true);
                 recyclerView.setAdapter(userAdapterSearch);

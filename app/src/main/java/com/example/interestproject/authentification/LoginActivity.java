@@ -203,20 +203,21 @@ public class LoginActivity extends AppCompatActivity {
                     reference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            User userTest = dataSnapshot.getValue(User.class);
+                            if(userTest.getLastname() != "defaultLastname") {
+                                User user = new User(
+                                        firebaseUser.getUid(),
+                                        firebaseUser.getDisplayName(),
+                                        "defaultLastname",
+                                        "defaultLastname",
+                                        "",
+                                        "default",
+                                        "offline",
+                                        "");
+                                HashMap<String, String> hashMap = user.toMap();
 
-                            User user = new User(
-                                    firebaseUser.getUid(),
-                                    firebaseUser.getDisplayName(),
-                                    "defaultLastname",
-                                    "defaultLastname",
-                                    "",
-                                    "default",
-                                    "offline",
-                                    "");
-
-                            HashMap<String, String> hashMap = user.toMap();
-
-                            reference.setValue(hashMap);
+                                reference.setValue(hashMap);
+                            }
 
                             updateUI(firebaseUser);
 
